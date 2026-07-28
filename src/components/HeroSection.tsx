@@ -68,7 +68,7 @@ export default function HeroSection() {
   return (
     <section className="hero-section">
       <video className="hero-video" autoPlay loop muted playsInline preload="auto">
-        <source src="/assets/hero/hero-video.mp4" type="video/mp4" />
+        <source src="/assets/hero/baneer-video.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
 

@@ -171,7 +171,7 @@ export default function Footer() {
             <div className="footer-widget footer-brand">
               <Link href="/" className="footer-logo">
                 <Image
-                  src="/assets/logo/Heading.png"
+                  src="/assets/logo/cio-white.png"
                   alt="CIO Choice"
                   width={180}
                   height={70}

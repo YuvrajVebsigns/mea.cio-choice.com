@@ -165,7 +165,7 @@ export default function Navbar() {
           aria-label="CIO Choice Home"
         >
           <Image
-            src="/assets/logo/Heading.png"
+            src="/assets/logo/cio-black.png"
             alt="CIO Choice"
             width={150}
             height={100}
