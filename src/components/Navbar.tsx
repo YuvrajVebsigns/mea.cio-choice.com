@@ -251,6 +251,14 @@ export default function Navbar() {
           >
             Recognized Brands
           </Link>
+
+          <Link
+            href="/contact"
+            className={`nav-link ${pathname === '/contact' ? 'active' : ''}`}
+            onClick={closeMobileMenu}
+          >
+            Contact Us
+          </Link>
         </nav>
 
         <div className="navbar-actions">

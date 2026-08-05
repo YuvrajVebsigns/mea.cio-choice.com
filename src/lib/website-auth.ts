@@ -223,7 +223,14 @@ type WebsiteTokenResponse = {
 };
 
 export function getWebsiteDomain(): string {
-  return process.env.NEXT_PUBLIC_WEBSITE_DOMAIN || 'https://ciochoice.com';
+  if (process.env.NEXT_PUBLIC_WEBSITE_DOMAIN) return process.env.NEXT_PUBLIC_WEBSITE_DOMAIN;
+
+  if (typeof window !== 'undefined') {
+    const host = window.location.hostname.replace(/^www\./, '');
+    if (host && host !== 'localhost' && host !== '127.0.0.1') return host;
+  }
+
+  return 'ciochoice.com';
 }
 
 export function readStoredWebsiteAuth(): WebsiteAuth | null {
