@@ -14577,3 +14577,789 @@ s .dialogues-badge-mark {
     transition: none;
   }
 }
+
+/* =========================================================
+   COOKIE CONSENT
+========================================================= */
+
+.cookie-consent {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99999;
+
+  width: 100%;
+
+  background: #ffffff;
+
+  border-top: 1px solid #eeeeee;
+
+  box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.08);
+
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.cookie-consent-inner {
+  width: 100%;
+  max-width: 1700px;
+
+  margin: 0 auto;
+
+  padding: 24px 64px 24px;
+
+  box-sizing: border-box;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 32px;
+}
+
+.cookie-preferences-wrapper {
+  display: block !important;
+
+  flex-direction: column;
+}
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.cookie-consent-content {
+  flex: 1;
+
+  min-width: 0;
+}
+
+.cookie-consent-description {
+  margin: 0;
+
+  color: #536071;
+
+  font-size: 16px;
+
+  line-height: 1.6;
+
+  font-weight: 400;
+}
+
+.cookie-consent-description strong {
+  color: #536071;
+  font-weight: 700;
+}
+
+.cookie-policy-link {
+  color: #a40000;
+
+  font-weight: 700;
+
+  text-decoration: underline;
+
+  text-underline-offset: 3px;
+}
+
+.cookie-policy-link:hover {
+  color: #7f0000;
+}
+
+/* =========================================================
+   ACTION BUTTONS
+========================================================= */
+
+.cookie-consent-actions {
+  display: flex;
+
+  justify-content: flex-end;
+
+  align-items: center;
+
+  gap: 10px;
+
+  flex-shrink: 0;
+
+  white-space: nowrap;
+}
+
+.cookie-btn {
+  min-width: 120px;
+
+  height: 44px;
+
+  padding: 0 18px;
+
+  border-radius: 8px;
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.cookie-btn:hover {
+  transform: translateY(-1px);
+}
+
+/* Accept all */
+
+.cookie-btn-primary {
+  border: 1px solid #a60000;
+
+  background: #a60000;
+
+  color: #ffffff;
+}
+
+.cookie-btn-primary:hover {
+  background: #870000;
+  border-color: #870000;
+}
+
+/* Essential only */
+
+.cookie-btn-secondary {
+  border: 1px solid #a60000;
+
+  background: #ffffff;
+
+  color: #a60000;
+}
+
+.cookie-btn-secondary:hover {
+  background: #fff5f5;
+}
+
+/* Customize */
+
+.cookie-customize-btn {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 6px;
+}
+
+.cookie-settings-icon {
+  font-size: 15px;
+
+  line-height: 1;
+}
+
+/* =========================================================
+   COOKIE PREFERENCES
+========================================================= */
+
+.cookie-preferences {
+  width: 100%;
+
+  margin-top: 52px;
+}
+
+.cookie-preferences-divider {
+  width: 100%;
+
+  height: 1px;
+
+  background: #e5e7eb;
+
+  margin-bottom: 28px;
+}
+
+.cookie-preferences-title {
+  margin-bottom: 20px;
+
+  color: #9f0000;
+
+  font-size: 17px;
+
+  font-weight: 800;
+
+  letter-spacing: 3px;
+}
+
+/* =========================================================
+   PREFERENCE CARDS
+========================================================= */
+
+.cookie-preferences-grid {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 16px;
+}
+
+.cookie-preference-card {
+  min-height: 95px;
+
+  padding: 20px 22px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 20px;
+
+  background: #f8fafc;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 18px;
+
+  box-sizing: border-box;
+}
+
+.cookie-preference-info {
+  min-width: 0;
+}
+
+.cookie-preference-info h3 {
+  margin: 0 0 7px;
+
+  color: #111827;
+
+  font-size: 19px;
+
+  font-weight: 800;
+}
+
+.cookie-preference-info p {
+  margin: 0;
+
+  color: #64748b;
+
+  font-size: 16px;
+
+  line-height: 1.5;
+}
+
+/* =========================================================
+   ALWAYS ACTIVE BADGE
+========================================================= */
+
+.cookie-active-badge {
+  flex-shrink: 0;
+
+  padding: 10px 15px;
+
+  border-radius: 25px;
+
+  background: #e5ebf3;
+
+  color: #667892;
+
+  font-size: 15px;
+
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+/* =========================================================
+   TOGGLE
+========================================================= */
+
+.cookie-switch {
+  position: relative;
+
+  display: inline-block;
+
+  width: 48px;
+
+  height: 28px;
+
+  flex-shrink: 0;
+
+  cursor: pointer;
+}
+
+.cookie-switch input {
+  opacity: 0;
+
+  width: 0;
+
+  height: 0;
+}
+
+.cookie-switch-slider {
+  position: absolute;
+
+  inset: 0;
+
+  background: #cbd5e1;
+
+  border-radius: 30px;
+
+  transition: 0.25s;
+}
+
+.cookie-switch-slider::before {
+  content: '';
+
+  position: absolute;
+
+  width: 22px;
+
+  height: 22px;
+
+  left: 3px;
+
+  top: 3px;
+
+  background: #ffffff;
+
+  border-radius: 50%;
+
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+
+  transition: 0.25s;
+}
+
+.cookie-switch input:checked + .cookie-switch-slider {
+  background: #a60000;
+}
+
+.cookie-switch input:checked + .cookie-switch-slider::before {
+  transform: translateX(20px);
+}
+
+/* =========================================================
+   PREFERENCES FOOTER
+========================================================= */
+
+.cookie-preferences-footer {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: flex-end;
+
+  gap: 38px;
+
+  margin-top: 28px;
+}
+
+/* Cancel */
+
+.cookie-cancel-btn {
+  border: none;
+
+  background: transparent;
+
+  color: #536071;
+
+  font-size: 18px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.cookie-cancel-btn:hover {
+  color: #111827;
+}
+
+/* Save Preferences */
+
+.cookie-save-btn {
+  min-width: 230px;
+
+  height: 58px;
+
+  padding: 0 28px;
+
+  border: none;
+
+  border-radius: 8px;
+
+  background: #111827;
+
+  color: #ffffff;
+
+  font-size: 18px;
+
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.cookie-save-btn:hover {
+  background: #000000;
+
+  transform: translateY(-1px);
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+  .cookie-consent-inner {
+    padding: 28px 40px;
+  }
+
+  .cookie-consent-description {
+    font-size: 18px;
+  }
+
+  .cookie-consent-actions {
+    margin-top: 25px;
+
+    justify-content: flex-start;
+  }
+
+  .cookie-preferences-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+  .cookie-consent-inner {
+    padding: 24px 20px;
+  }
+
+  .cookie-consent-description {
+    font-size: 16px;
+
+    line-height: 1.6;
+  }
+
+  .cookie-consent-actions {
+    display: grid;
+
+    grid-template-columns: 1fr;
+
+    gap: 10px;
+
+    margin-top: 22px;
+  }
+
+  .cookie-btn {
+    width: 100%;
+
+    height: 52px;
+
+    min-width: 0;
+
+    font-size: 16px;
+  }
+
+  .cookie-preferences {
+    margin-top: 30px;
+  }
+
+  .cookie-preferences-grid {
+    grid-template-columns: 1fr;
+
+    gap: 12px;
+  }
+
+  .cookie-preference-card {
+    padding: 18px;
+
+    align-items: flex-start;
+  }
+
+  .cookie-preference-info h3 {
+    font-size: 17px;
+  }
+
+  .cookie-preference-info p {
+    font-size: 14px;
+  }
+
+  .cookie-active-badge {
+    font-size: 12px;
+
+    padding: 8px 10px;
+  }
+
+  .cookie-preferences-footer {
+    gap: 15px;
+
+    justify-content: space-between;
+  }
+
+  .cookie-cancel-btn {
+    font-size: 16px;
+  }
+
+  .cookie-save-btn {
+    min-width: 0;
+
+    height: 52px;
+
+    padding: 0 18px;
+
+    font-size: 15px;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+  .cookie-consent-inner {
+    padding: 20px 16px;
+  }
+
+  .cookie-preference-card {
+    flex-direction: column;
+
+    align-items: flex-start;
+  }
+
+  .cookie-active-badge {
+    align-self: flex-start;
+  }
+
+  .cookie-preferences-footer {
+    flex-direction: column-reverse;
+
+    align-items: stretch;
+  }
+
+  .cookie-save-btn,
+  .cookie-cancel-btn {
+    width: 100%;
+  }
+}
+
+/* =========================================================
+   COOKIE POLICY PAGE
+========================================================= */
+
+.cookie-policy-page {
+  min-height: 100vh;
+
+  background: #ffffff;
+}
+
+.cookie-policy-header {
+  background: linear-gradient(135deg, #a60000 0%, #870000 100%);
+
+  color: #ffffff;
+
+  padding: 80px 0;
+
+  text-align: center;
+}
+
+.cookie-policy-header h1 {
+  margin: 0;
+
+  font-size: 48px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.5px;
+}
+
+.cookie-policy-content {
+  padding: 60px 0;
+}
+
+.cookie-policy-inner {
+  max-width: 800px;
+
+  margin: 0 auto;
+
+  padding: 0 20px;
+
+  box-sizing: border-box;
+}
+
+.cookie-policy-section {
+  margin-bottom: 48px;
+}
+
+.cookie-policy-section h2 {
+  margin: 0 0 24px;
+
+  color: #111827;
+
+  font-size: 32px;
+
+  font-weight: 800;
+
+  line-height: 1.3;
+}
+
+.cookie-policy-section h3 {
+  margin: 0 0 16px;
+
+  color: #a60000;
+
+  font-size: 24px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.5px;
+}
+
+.cookie-policy-section p {
+  margin: 0 0 16px;
+
+  color: #536071;
+
+  font-size: 16px;
+
+  line-height: 1.8;
+
+  font-weight: 400;
+}
+
+.cookie-policy-section p:last-of-type {
+  margin-bottom: 0;
+}
+
+.cookie-policy-section ul {
+  margin: 16px 0 0;
+
+  padding-left: 24px;
+
+  list-style: disc;
+}
+
+.cookie-policy-section li {
+  margin-bottom: 12px;
+
+  color: #536071;
+
+  font-size: 16px;
+
+  line-height: 1.6;
+
+  font-weight: 400;
+}
+
+.cookie-policy-section a {
+  color: #a60000;
+
+  font-weight: 700;
+
+  text-decoration: none;
+
+  transition: color 0.2s ease;
+}
+
+.cookie-policy-section a:hover {
+  color: #870000;
+
+  text-decoration: underline;
+}
+
+/* =========================================================
+   COOKIE POLICY RESPONSIVE
+========================================================= */
+
+@media (max-width: 768px) {
+  .cookie-policy-header {
+    padding: 60px 0;
+  }
+
+  .cookie-policy-header h1 {
+    font-size: 36px;
+  }
+
+  .cookie-policy-content {
+    padding: 40px 0;
+  }
+
+  .cookie-policy-section {
+    margin-bottom: 36px;
+  }
+
+  .cookie-policy-section h2 {
+    font-size: 26px;
+
+    margin-bottom: 18px;
+  }
+
+  .cookie-policy-section h3 {
+    font-size: 20px;
+
+    margin-bottom: 14px;
+  }
+
+  .cookie-policy-section p {
+    font-size: 15px;
+
+    margin-bottom: 14px;
+  }
+
+  .cookie-policy-section li {
+    font-size: 15px;
+
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cookie-policy-header {
+    padding: 40px 0;
+  }
+
+  .cookie-policy-header h1 {
+    font-size: 28px;
+  }
+
+  .cookie-policy-content {
+    padding: 30px 0;
+  }
+
+  .cookie-policy-inner {
+    padding: 0 16px;
+  }
+
+  .cookie-policy-section {
+    margin-bottom: 28px;
+  }
+
+  .cookie-policy-section h2 {
+    font-size: 22px;
+
+    margin-bottom: 14px;
+  }
+
+  .cookie-policy-section h3 {
+    font-size: 18px;
+
+    margin-bottom: 12px;
+  }
+
+  .cookie-policy-section p {
+    font-size: 14px;
+
+    margin-bottom: 12px;
+  }
+
+  .cookie-policy-section li {
+    font-size: 14px;
+
+    margin-bottom: 8px;
+  }
+}
