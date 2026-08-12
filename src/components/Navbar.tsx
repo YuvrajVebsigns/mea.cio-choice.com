@@ -181,7 +181,6 @@ export default function Navbar() {
           >
             Home
           </Link>
-
           <Link
             href="/about-us"
             className={`nav-link ${pathname === '/about-us' ? 'active' : ''}`}
@@ -189,7 +188,6 @@ export default function Navbar() {
           >
             About Us
           </Link>
-
           <Link
             href="/advisory-panel"
             className={`nav-link ${pathname === '/advisory-panel' ? 'active' : ''}`}
@@ -197,7 +195,6 @@ export default function Navbar() {
           >
             Advisory Panel
           </Link>
-
           <div
             className={`nav-dropdown ${processOpen ? 'open' : ''}`}
             onMouseEnter={() => {
@@ -235,7 +232,6 @@ export default function Navbar() {
               </ul>
             </div>
           </div>
-
           <Link
             href="/red-carpet-night"
             className={`nav-link ${pathname === '/red-carpet-night' ? 'active' : ''}`}
@@ -243,7 +239,7 @@ export default function Navbar() {
           >
             Red Carpet Night
           </Link>
-
+          =
           <Link
             href="/recognized-brands"
             className={`nav-link ${pathname === '/recognized-brands' ? 'active' : ''}`}
@@ -251,7 +247,6 @@ export default function Navbar() {
           >
             Recognized Brands
           </Link>
-
           <Link
             href="/contact"
             className={`nav-link ${pathname === '/contact' ? 'active' : ''}`}
