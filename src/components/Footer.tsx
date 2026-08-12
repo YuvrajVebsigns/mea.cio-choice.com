@@ -158,10 +158,44 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { Phone, Mail } from 'lucide-react';
+import { Phone, Mail, Send } from 'lucide-react';
 import { FaFacebookF, FaInstagram, FaLinkedinIn, FaXTwitter } from 'react-icons/fa6';
+import { useState } from 'react';
+import { submitWebsiteSubscribe } from '@/services/subscribers.service';
 
 export default function Footer() {
+  const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!email.trim()) {
+      setMessage({ type: 'error', text: 'Please enter your email' });
+      return;
+    }
+
+    setLoading(true);
+    setMessage(null);
+
+    try {
+      const response = await submitWebsiteSubscribe({ email });
+      setEmail('');
+      setMessage({
+        type: 'success',
+        text: response?.message || 'Subscribed successfully!',
+      });
+      setTimeout(() => setMessage(null), 3000);
+    } catch (error: unknown) {
+      const errorMsg =
+        error instanceof Error ? error.message : 'Failed to subscribe. Please try again.';
+      setMessage({ type: 'error', text: errorMsg });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <footer className="footer-section">
       <div className="footer-main">
@@ -231,21 +265,58 @@ export default function Footer() {
               </ul>
             </div>
 
-            {/* Office */}
+            {/* Subscribe & Office */}
             <div className="footer-widget">
-              <h4 className="footer-title">Our Office</h4>
+              <h4 className="footer-title">Subscribe</h4>
 
-              <p className="footer-description">
-                Units Nos. 3037 – A1 Wing, 3rd Floor,
-                <br />
-                Oberoi Garden Estate,
-                <br />
-                Near Chandivali Studio,
-                <br />
-                Andheri (East),
-                <br />
-                Mumbai – 400072, INDIA
-              </p>
+              <form className="footer-subscribe" onSubmit={handleSubscribe}>
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  className="footer-input"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  disabled={loading}
+                  required
+                />
+                <button
+                  type="submit"
+                  className="footer-submit"
+                  aria-label="Subscribe"
+                  disabled={loading}
+                >
+                  <Send size={18} />
+                </button>
+              </form>
+
+              {message && (
+                <div
+                  className={`footer-message ${message.type}`}
+                  style={{
+                    marginTop: '8px',
+                    fontSize: '12px',
+                    color: message.type === 'success' ? '#10b981' : '#ef4444',
+                  }}
+                >
+                  {message.text}
+                </div>
+              )}
+
+              <div style={{ marginTop: '24px' }}>
+                <h4 className="footer-title">Our Office</h4>
+
+                <p className="footer-description">
+                  Units Nos. 3037 – A1 Wing, 3rd Floor,
+                  <br />
+                  Oberoi Garden Estate,
+                  <br />
+                  Near Chandivali Studio,
+                  <br />
+                  Andheri (East),
+                  <br />
+                  Mumbai – 400072, INDIA
+                </p>
+              </div>
             </div>
           </div>
         </div>

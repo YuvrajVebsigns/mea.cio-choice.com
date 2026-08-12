@@ -216,39 +216,14 @@
 import { API_ENDPOINTS } from '@/constants/api';
 import { getWebsiteDomain } from '@/lib/website-auth';
 import { apiFetch } from '@/services/apiFetch';
-
-type WebsiteAuth = {
-  token: string;
-  websiteId: string;
-};
-
-type WebsiteTokenResponse = {
-  token?: string;
-  websiteId?: string;
-  id?: string;
-  website?: {
-    id?: string;
-    token?: string;
-  };
-  data?: {
-    token?: string;
-    websiteId?: string;
-    id?: string;
-    website?: {
-      id?: string;
-      token?: string;
-    };
-    data?: {
-      token?: string;
-      websiteId?: string;
-      id?: string;
-      website?: {
-        id?: string;
-        token?: string;
-      };
-    };
-  };
-};
+import {
+  WebsiteAuth,
+  WebsiteTokenResponse,
+  readStoredWebsiteAuth,
+  extractWebsiteToken,
+  extractWebsiteId,
+  getApiErrorStatus,
+} from '@/lib/website-auth-utils';
 
 export type ContactSubmission = {
   fullName: string;
@@ -263,63 +238,7 @@ type ContactResponse = {
   data?: unknown;
 };
 
-function readStoredWebsiteAuth(): WebsiteAuth | null {
-  if (typeof window === 'undefined') return null;
-
-  const raw = window.localStorage.getItem('websiteAuth');
-  if (!raw) return null;
-
-  try {
-    const parsed: unknown = JSON.parse(raw);
-
-    if (
-      typeof parsed === 'object' &&
-      parsed !== null &&
-      'token' in parsed &&
-      'websiteId' in parsed &&
-      typeof (parsed as { token?: unknown }).token === 'string' &&
-      typeof (parsed as { websiteId?: unknown }).websiteId === 'string'
-    ) {
-      return {
-        token: (parsed as { token: string }).token,
-        websiteId: (parsed as { websiteId: string }).websiteId,
-      };
-    }
-  } catch {
-    return null;
-  }
-
-  return null;
-}
-
-function extractWebsiteToken(response: WebsiteTokenResponse) {
-  return (
-    response.token ??
-    response.data?.token ??
-    response.data?.data?.token ??
-    response.data?.website?.token ??
-    response.data?.data?.website?.token ??
-    response.website?.token ??
-    null
-  );
-}
-
-function extractWebsiteId(response: WebsiteTokenResponse) {
-  return (
-    response.websiteId ??
-    response.website?.id ??
-    response.data?.website?.id ??
-    response.data?.websiteId ??
-    response.data?.data?.websiteId ??
-    response.data?.data?.website?.id ??
-    response.data?.data?.id ??
-    response.data?.id ??
-    response.id ??
-    null
-  );
-}
-
-async function ensureWebsiteAuth(domain: string) {
+async function ensureWebsiteAuth(domain: string): Promise<WebsiteAuth | null> {
   if (typeof window === 'undefined') return null;
 
   const stored = readStoredWebsiteAuth();
@@ -348,20 +267,6 @@ async function ensureWebsiteAuth(domain: string) {
   }
 
   return null;
-}
-
-function getApiErrorStatus(error: unknown) {
-  if (typeof error === 'object' && error !== null && 'statusCode' in error) {
-    const statusCode = (error as { statusCode?: unknown }).statusCode;
-    return typeof statusCode === 'number' ? statusCode : Number(statusCode);
-  }
-
-  if (typeof error === 'object' && error !== null && 'status' in error) {
-    const status = (error as { status?: unknown }).status;
-    return typeof status === 'number' ? status : Number(status);
-  }
-
-  return undefined;
 }
 
 export async function submitWebsiteContact(payload: ContactSubmission) {
