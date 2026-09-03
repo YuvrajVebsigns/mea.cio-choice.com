@@ -5921,6 +5921,350 @@ main.advisory-page {
 }
 
 /* =========================================================
+   CLOUDFLARE CAPTCHA
+========================================================= */
+
+.contact-captcha {
+  width: 100%;
+  margin-top: 14px;
+  margin-bottom: 4px;
+}
+
+/* CAPTCHA TITLE */
+
+.captcha-title {
+  display: block;
+  margin-bottom: 7px;
+
+  color: #5f5555;
+
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* CAPTCHA BOX */
+
+.custom-captcha {
+  width: 60%;
+  min-height: 64px;
+  padding: 10px 12px;
+
+  display: flex;
+  align-items: center;
+  gap: 11px;
+
+  background: #fff8f8;
+
+  border: 1px solid #eadada;
+  border-radius: 12px;
+
+  box-sizing: border-box;
+
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
+}
+
+/* Hover */
+
+.custom-captcha:hover {
+  border-color: rgba(142, 1, 1, 0.3);
+
+  background: #ffffff;
+
+  box-shadow: 0 6px 18px rgba(142, 1, 1, 0.07);
+}
+
+/* VERIFIED */
+
+.custom-captcha-verified {
+  border-color: rgba(34, 139, 80, 0.35);
+
+  background: #f7fff9;
+
+  box-shadow: 0 0 0 3px rgba(34, 139, 80, 0.06);
+}
+
+/* ERROR */
+
+.custom-captcha-error {
+  border-color: rgba(142, 1, 1, 0.45);
+
+  background: #fff5f5;
+
+  box-shadow: 0 0 0 3px rgba(142, 1, 1, 0.05);
+}
+
+/* =========================================================
+   CAPTCHA CHECK / ICON
+========================================================= */
+
+.captcha-check {
+  width: 38px;
+  height: 38px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #ffffff;
+
+  border: 1px solid #eadada;
+  border-radius: 9px;
+
+  color: #8e0101;
+
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+/* Empty checkbox-style indicator */
+
+.captcha-check > span {
+  width: 17px;
+  height: 17px;
+
+  display: block;
+
+  background: transparent;
+
+  border: 2px solid #b9aaaa;
+  border-radius: 4px;
+
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease;
+}
+
+/* Verified icon */
+
+.captcha-check-success {
+  background: #eefaf2;
+
+  border-color: rgba(34, 139, 80, 0.3);
+
+  color: #218a50;
+}
+
+/* Verifying */
+
+.captcha-check-loading {
+  background: #fff3f3;
+
+  border-color: rgba(142, 1, 1, 0.25);
+
+  color: #8e0101;
+}
+
+/* =========================================================
+   CAPTCHA TEXT
+========================================================= */
+
+.captcha-content {
+  min-width: 0;
+
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+
+  gap: 3px;
+}
+
+.captcha-content strong {
+  display: block;
+
+  color: #242020;
+
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.captcha-content small {
+  display: block;
+
+  color: #796f6f;
+
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+/* =========================================================
+   I'M HUMAN BUTTON
+========================================================= */
+
+.captcha-verify-button {
+  min-width: 88px;
+  height: 38px;
+
+  flex-shrink: 0;
+
+  padding: 0 13px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #8e0101;
+  color: #ffffff;
+
+  border: 1px solid #8e0101;
+  border-radius: 8px;
+
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+
+  white-space: nowrap;
+
+  cursor: pointer;
+
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.captcha-verify-button:hover:not(:disabled) {
+  background: #111111;
+
+  border-color: #111111;
+
+  transform: translateY(-1px);
+
+  box-shadow: 0 7px 18px rgba(0, 0, 0, 0.12);
+}
+
+/* Disabled */
+
+.captcha-verify-button:disabled {
+  background: #d9cece;
+  color: #8b8080;
+
+  border-color: #d9cece;
+
+  cursor: not-allowed;
+
+  opacity: 0.75;
+
+  transform: none;
+
+  box-shadow: none;
+}
+
+/*
+ * CAPTCHA button before completing form.
+ */
+
+.captcha-verify-button:disabled:not(:hover) {
+  cursor: not-allowed;
+}
+
+/* =========================================================
+   CAPTCHA REFRESH BUTTON
+========================================================= */
+
+.captcha-refresh-icon-button {
+  width: 38px;
+  height: 38px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #ffffff;
+
+  color: #8e0101;
+
+  border: 1px solid rgba(142, 1, 1, 0.2);
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.captcha-refresh-icon-button:hover:not(:disabled) {
+  background: #8e0101;
+
+  color: #ffffff;
+
+  border-color: #8e0101;
+
+  transform: rotate(15deg);
+
+  box-shadow: 0 6px 16px rgba(142, 1, 1, 0.16);
+}
+
+.captcha-refresh-icon-button:disabled {
+  cursor: progress;
+
+  opacity: 0.6;
+}
+
+/* =========================================================
+   CAPTCHA SPINNER
+========================================================= */
+
+.captcha-spin {
+  animation: captchaSpin 0.9s linear infinite;
+}
+
+@keyframes captchaSpin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================================================
+   INVISIBLE CLOUDFLARE TURNSTILE
+========================================================= */
+
+.turnstile-invisible {
+  position: absolute !important;
+
+  width: 1px !important;
+  height: 1px !important;
+
+  overflow: hidden !important;
+
+  opacity: 0 !important;
+
+  pointer-events: none !important;
+
+  visibility: hidden !important;
+}
+/* =========================================================
    REDUCED MOTION
 ========================================================= */
 
