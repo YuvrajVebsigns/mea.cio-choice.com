@@ -239,7 +239,7 @@ export default function Navbar() {
           >
             Red Carpet Night
           </Link>
-          =
+
           <Link
             href="/recognized-brands"
             className={`nav-link ${pathname === '/recognized-brands' ? 'active' : ''}`}

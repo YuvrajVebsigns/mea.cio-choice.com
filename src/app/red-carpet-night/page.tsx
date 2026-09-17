@@ -5,7 +5,7 @@ export default function RedCarpetNight() {
     <section className="red-carpet-container">
       <div className="image-wrapper">
         <Image
-          src="/assets/images/red-carpet-night.jpg"
+          src="/assets/images/red-carpet-night1.jpeg"
           alt="MEA Red Carpet Night"
           width={1100}
           height={750}
