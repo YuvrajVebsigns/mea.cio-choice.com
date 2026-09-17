@@ -23,6 +23,7 @@ export const API_ENDPOINTS = {
     PAGES: {
       BASE: '/api/v1/website/pages',
       BY_SLUG: (slug: string) => `/api/v1/website/pages/${encodeURIComponent(slug)}`,
+      RECOGNIZED_BRANDS: '/api/v1/website/pages/recognized-brands',
     },
 
     ATTENDEES: {
