@@ -192,6 +192,7 @@ import { apiFetch } from '@/services/apiFetch';
 export type WebsiteAuth = {
   token: string;
   websiteId: string;
+  domain?: string;
 };
 
 type WebsiteTokenResponse = {
@@ -253,6 +254,10 @@ export function readStoredWebsiteAuth(): WebsiteAuth | null {
       return {
         token: (parsed as { token: string }).token,
         websiteId: (parsed as { websiteId: string }).websiteId,
+        domain:
+          'domain' in parsed && typeof (parsed as { domain?: unknown }).domain === 'string'
+            ? (parsed as { domain: string }).domain
+            : undefined,
       };
     }
   } catch {
@@ -297,7 +302,7 @@ export async function ensureWebsiteAuth(domain?: string): Promise<WebsiteAuth> {
   const resolvedDomain = domain || getWebsiteDomain();
 
   const stored = readStoredWebsiteAuth();
-  if (stored) return stored;
+  if (stored?.domain === resolvedDomain) return stored;
 
   const tokenRes = await apiFetch<WebsiteTokenResponse>(
     `${API_ENDPOINTS.WEBSITE.TOKEN}?domain=${encodeURIComponent(resolvedDomain)}`,
@@ -319,7 +324,7 @@ export async function ensureWebsiteAuth(domain?: string): Promise<WebsiteAuth> {
     throw new Error('Could not obtain website token. Check website domain and API URL.');
   }
 
-  const value: WebsiteAuth = { token, websiteId };
+  const value: WebsiteAuth = { token, websiteId, domain: resolvedDomain };
   window.localStorage.setItem('websiteAuth', JSON.stringify(value));
 
   return value;

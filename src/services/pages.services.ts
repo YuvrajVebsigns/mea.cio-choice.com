@@ -64,11 +64,11 @@
 import { API_ENDPOINTS } from '@/constants/api';
 import {
   buildWebsiteAuthHeaders,
+  clearWebsiteAuth,
   ensureWebsiteAuth,
   getWebsiteDomain,
-  readStoredWebsiteAuth,
 } from '@/lib/website-auth';
-import { apiFetch } from '@/services/apiFetch';
+import { apiFetch, ApiError } from '@/services/apiFetch';
 
 export type WebsitePage = {
   id: string;
@@ -105,24 +105,41 @@ export async function fetchWebsitePageBySlug(slug: string): Promise<WebsitePage 
   if (typeof window === 'undefined') return null;
 
   const domain = getWebsiteDomain();
-  let auth = readStoredWebsiteAuth();
-
-  if (!auth?.token || !auth.websiteId) {
-    try {
-      auth = await ensureWebsiteAuth(domain);
-    } catch {
-      return null;
-    }
-  }
-
-  if (!auth?.token || !auth.websiteId) return null;
+  let auth;
 
   try {
-    const res = await apiFetch<unknown>(API_ENDPOINTS.WEBSITE.PAGES.BY_SLUG(slug), {
-      method: 'GET',
-      requireAuth: false,
-      headers: buildWebsiteAuthHeaders(auth),
-    });
+    auth = await ensureWebsiteAuth(domain);
+  } catch {
+    return null;
+  }
+  let currentAuth = auth;
+
+  try {
+    const endpoint =
+      slug.trim() === 'recognized-brands'
+        ? API_ENDPOINTS.WEBSITE.PAGES.RECOGNIZED_BRANDS
+        : API_ENDPOINTS.WEBSITE.PAGES.BY_SLUG(slug.trim());
+
+    const requestPage = () =>
+      apiFetch<unknown>(endpoint, {
+        method: 'GET',
+        requireAuth: false,
+        headers: buildWebsiteAuthHeaders(currentAuth),
+      });
+
+    let res: unknown;
+
+    try {
+      res = await requestPage();
+    } catch (error) {
+      if (!(error instanceof ApiError) || ![401, 403, 404].includes(error.statusCode)) {
+        throw error;
+      }
+
+      clearWebsiteAuth();
+      currentAuth = await ensureWebsiteAuth(domain);
+      res = await requestPage();
+    }
 
     return normalizePageResponse(res);
   } catch {
