@@ -2579,6 +2579,75 @@ main.advisory-page {
   transform: rotate(45deg);
 }
 
+/* =========================================================
+   READ MORE
+========================================================= */
+
+.founder-readmore-wrap {
+  position: relative;
+  z-index: 2;
+
+  margin: 28px 0 34px;
+}
+
+.founder-readmore-btn {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 12px 0;
+
+  color: #8e0101;
+
+  font-size: 16px;
+
+  font-weight: 700;
+
+  text-decoration: none;
+
+  position: relative;
+
+  transition: all 0.3s ease;
+}
+
+.founder-readmore-btn::after {
+  content: '→';
+
+  font-size: 18px;
+
+  transition: transform 0.3s ease;
+}
+
+.founder-readmore-btn::before {
+  content: '';
+
+  position: absolute;
+
+  left: 0;
+  bottom: 6px;
+
+  width: 0;
+  height: 2px;
+
+  background: #8e0101;
+
+  transition: width 0.35s ease;
+}
+
+.founder-readmore-btn:hover {
+  color: #a40000;
+}
+
+.founder-readmore-btn:hover::before {
+  width: 100%;
+}
+
+.founder-readmore-btn:hover::after {
+  transform: translateX(6px);
+}
+
 /* ANIMATION */
 
 .founder-message-section {

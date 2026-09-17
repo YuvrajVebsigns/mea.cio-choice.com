@@ -11,15 +11,15 @@ type DropdownName = 'process' | 'yearBook';
 export default function Navbar() {
   const pathname = usePathname();
 
-  const [isHidden, setIsHidden] = useState(false);
+  // const [isHidden, setIsHidden] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
   const [processOpen, setProcessOpen] = useState(false);
   const [yearBookOpen, setYearBookOpen] = useState(false);
 
-  const lastScrollY = useRef(0);
-  const hideTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // const lastScrollY = useRef(0);
+  // const hideTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const dropdownTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   function closeAllDropdowns() {
@@ -70,12 +70,12 @@ export default function Navbar() {
       clearTimeout(dropdownTimer.current);
     }
 
-    if (hideTimer.current) {
-      clearTimeout(hideTimer.current);
-    }
+    // if (hideTimer.current) {
+    //   clearTimeout(hideTimer.current);
+    // }
 
     setMobileOpen(false);
-    setIsHidden(false);
+    // setIsHidden(false);
     closeAllDropdowns();
   }
 
@@ -115,51 +115,53 @@ export default function Navbar() {
     };
   }, [mobileOpen]);
 
-  useEffect(() => {
-    lastScrollY.current = window.scrollY;
+  // useEffect(() => {
+  //   lastScrollY.current = window.scrollY;
 
-    function handleScroll() {
-      const current = window.scrollY;
-      const diff = current - lastScrollY.current;
+  //   function handleScroll() {
+  //     const current = window.scrollY;
+  //     const diff = current - lastScrollY.current;
 
-      if (Math.abs(diff) < 8) return;
+  //     if (Math.abs(diff) < 8) return;
 
-      if (hideTimer.current) {
-        clearTimeout(hideTimer.current);
-      }
+  //     if (hideTimer.current) {
+  //       clearTimeout(hideTimer.current);
+  //     }
 
-      if (diff < 0) {
-        setIsHidden(false);
-      }
+  //     if (diff < 0) {
+  //       setIsHidden(false);
+  //     }
 
-      if (diff > 0 && current > 140 && !mobileOpen) {
-        hideTimer.current = setTimeout(() => {
-          setIsHidden(true);
-        }, 180);
-      }
+  //     if (diff > 0 && current > 140 && !mobileOpen) {
+  //       hideTimer.current = setTimeout(() => {
+  //         setIsHidden(true);
+  //       }, 180);
+  //     }
 
-      lastScrollY.current = current;
-    }
+  //     lastScrollY.current = current;
+  //   }
 
-    window.addEventListener('scroll', handleScroll, {
-      passive: true,
-    });
+  //   window.addEventListener('scroll', handleScroll, {
+  //     passive: true,
+  //   });
 
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
+  //   return () => {
+  //     window.removeEventListener('scroll', handleScroll);
 
-      if (hideTimer.current) clearTimeout(hideTimer.current);
+  //     if (hideTimer.current) clearTimeout(hideTimer.current);
 
-      if (dropdownTimer.current) clearTimeout(dropdownTimer.current);
-    };
-  }, [mobileOpen]);
+  //     if (dropdownTimer.current) clearTimeout(dropdownTimer.current);
+  //   };
+  // }, [mobileOpen]);
 
   return (
-    <header
-      className={['navbar', isHidden ? 'navbar-hide' : '', mobileOpen ? 'mobile-open' : '']
-        .filter(Boolean)
-        .join(' ')}
-    >
+    // <header
+    //   className={['navbar', isHidden ? 'navbar-hide' : '', mobileOpen ? 'mobile-open' : '']
+    //     .filter(Boolean)
+    //     .join(' ')}
+    // >
+
+    <header className={`navbar ${mobileOpen ? 'mobile-open' : ''}`}>
       <div className="navbar-container">
         <Link
           href="/"
@@ -306,7 +308,6 @@ export default function Navbar() {
             aria-label={mobileOpen ? 'Close Menu' : 'Open Menu'}
             onClick={() => {
               setMobileOpen((prev) => !prev);
-              setIsHidden(false);
             }}
           >
             {mobileOpen ? <X size={22} /> : <Menu size={22} />}

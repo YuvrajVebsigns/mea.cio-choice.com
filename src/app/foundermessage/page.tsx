@@ -50,6 +50,25 @@ export default function FoundersMessage() {
             businesses, customers, and innovators worldwide, we have established unparalleled reach
             and influence in the communities we serve.
           </p>
+          <p className="founder-description">
+            {' '}
+            Our approach is deeply customer-centric. Every brand, platform, and initiative we craft
+            is tailored to deliver unique, impactful, and results-driven experiences. Through
+            bespoke programs, we empower our clients to communicate the right message, in the right
+            format, to the right audience, ensuring engagement and meaningful outcomes.
+          </p>
+          <p className="founder-description">
+            In today’s hyper-connected world, where customer expectations evolve rapidly, we
+            continuously innovate to keep our clients ahead. Our focus is on helping them connect
+            effectively with their audiences, at the right time, through relevant and resonant
+            content.
+          </p>
+          <p className="founder-description">
+            Beyond transactions, our mission is to build lasting relationships, unite global
+            communities, and generate ideas that are meaningful, timely, and impactful. With
+            unwavering dedication, we consistently deliver exceptional results for our clients, time
+            and again.
+          </p>
 
           {/* QUOTE */}
           {/* <blockquote className="founder-quote">
@@ -59,17 +78,17 @@ export default function FoundersMessage() {
             </p>
           </blockquote> */}
 
-          <div className="founder-readmore-wrap">
-            <Link href="/foundermessage" className="founder-readmore-btn">
+          {/* <div className="founder-readmore-wrap">
+            <Link href="/aboutus" className="founder-readmore-btn">
               Read more
             </Link>
-          </div>
+          </div> */}
 
           {/* AUTHOR */}
-          <div className="founder-author">
+          {/* <div className="founder-author">
             <h3>Anoop Mathur</h3>
             <span>Founder, CORE MEDIA</span>
-          </div>
+          </div> */}
 
           {/* BUTTON */}
           <Link href="/#contact-section" className="founder-btn">
