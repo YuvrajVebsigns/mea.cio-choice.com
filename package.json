@@ -2,6 +2,9 @@
   "name": "core-media_adminfrontend",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=20.10.0"
+  },
   "scripts": {
     "dev": "node -e \"require('fs').copyFileSync('.env.local','.env.development.local')\" && dotenv -e .env.local -- next dev",
     "dev:uat": "node -e \"require('fs').copyFileSync('.env.dev','.env.development.local')\" && dotenv -e .env.dev -- next dev",
