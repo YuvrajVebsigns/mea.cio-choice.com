@@ -46,15 +46,15 @@ function BrandLogo({ name, logo }: { name: string; logo: string }) {
       <div
         className="brand-logo-fallback"
         style={{
-          width: '80px',
-          height: '80px',
+          width: '100px',
+          height: '100px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           backgroundColor: '#8e0101',
           borderRadius: '50%',
           color: '#fff',
-          fontSize: '18px',
+          fontSize: '22px',
           fontWeight: 'bold',
           margin: '0 auto 15px',
         }}
@@ -68,12 +68,12 @@ function BrandLogo({ name, logo }: { name: string; logo: string }) {
     <Image
       src={logo}
       alt={name}
-      width={120}
-      height={80}
+      width={180}
+      height={110}
       className="brand-logo"
       style={{
-        maxHeight: '80px',
-        maxWidth: '120px',
+        maxHeight: '110px',
+        maxWidth: '180px',
         objectFit: 'contain',
         margin: '0 auto 15px',
       }}

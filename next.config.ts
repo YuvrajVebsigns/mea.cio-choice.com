@@ -8,6 +8,11 @@ const nextConfig: NextConfig = {
         hostname: 'beracore-media-bucket-test.idr01.zata.ai',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'coremediagroup.sgp1.digitaloceanspaces.com',
+        pathname: '/**',
+      },
     ],
   },
 };

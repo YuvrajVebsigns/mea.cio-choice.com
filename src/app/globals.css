@@ -13587,7 +13587,8 @@ s .dialogues-badge-mark {
 /* Logo */
 
 .brand-logo {
-  height: 75px;
+  width: min(100%, 180px);
+  height: 110px;
   object-fit: contain;
 
   margin-bottom: 25px;
@@ -13697,7 +13698,7 @@ s .dialogues-badge-mark {
   }
 
   .brand-logo {
-    height: 60px;
+    height: 90px;
   }
 
   .recognized-header h1 {
