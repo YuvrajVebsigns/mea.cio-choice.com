@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import { ArrowUpRight, ChevronDown, Menu, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 
-type DropdownName = 'process';
+type DropdownName = 'process' | 'yearBook';
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -16,6 +16,7 @@ export default function Navbar() {
   const [isMobile, setIsMobile] = useState(false);
 
   const [processOpen, setProcessOpen] = useState(false);
+  const [yearBookOpen, setYearBookOpen] = useState(false);
 
   const lastScrollY = useRef(0);
   const hideTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -23,6 +24,7 @@ export default function Navbar() {
 
   function closeAllDropdowns() {
     setProcessOpen(false);
+    setYearBookOpen(false);
   }
 
   function openDropdown(name: DropdownName) {
@@ -31,10 +33,11 @@ export default function Navbar() {
     }
 
     setProcessOpen(name === 'process');
+    setYearBookOpen(name === 'yearBook');
   }
 
   function toggleDropdown(name: DropdownName) {
-    const isOpen = processOpen;
+    const isOpen = name === 'process' ? processOpen : yearBookOpen;
 
     closeAllDropdowns();
 
@@ -247,13 +250,44 @@ export default function Navbar() {
           >
             Recognized Brands
           </Link>
-          <Link
+
+          <div
+            className={`nav-dropdown ${yearBookOpen ? 'open' : ''}`}
+            onMouseEnter={() => {
+              if (!isMobile) openDropdown('yearBook');
+            }}
+            onMouseLeave={() => {
+              if (!isMobile) scheduleDropdownClose();
+            }}
+          >
+            <button
+              type="button"
+              className={`nav-link ${pathname.startsWith('/year-book') ? 'active' : ''}`}
+              onClick={() => handleDropdownClick('yearBook')}
+              aria-expanded={yearBookOpen}
+            >
+              <span>Year Book</span>
+              <ChevronDown size={16} />
+            </button>
+
+            <div className="mega-panel nav-year-dropdown">
+              <ul>
+                <li>
+                  <Link href="/year-book/2026" className="mega-item" onClick={closeMobileMenu}>
+                    2026 Year Book
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* <Link
             href="/contact"
             className={`nav-link ${pathname === '/contact' ? 'active' : ''}`}
             onClick={closeMobileMenu}
           >
             Contact Us
-          </Link>
+          </Link> */}
         </nav>
 
         <div className="navbar-actions">
