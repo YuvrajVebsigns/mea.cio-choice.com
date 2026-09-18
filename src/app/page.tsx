@@ -4,6 +4,8 @@ import ProjectsSection from '@/components/ProjectsSection';
 import ContactSection from '@/components/ContactSection';
 import BlogsSection from '@/components/BlogsSection';
 import AboutSection from '@/components/AboutSection';
+import EventScheduleSection from '@/components/EventScheduleSection';
+import MarketedBySection from '@/components/MarketedBySection';
 
 export default function Home() {
   return (
@@ -15,6 +17,8 @@ export default function Home() {
       <ProjectsSection />
       <BlogsSection />
       <ContactSection />
+      <EventScheduleSection />
+      <MarketedBySection />
     </main>
   );
 }

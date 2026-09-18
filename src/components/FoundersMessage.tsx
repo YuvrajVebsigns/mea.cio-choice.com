@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 // import { useRef } from 'react';
 import { ArrowUpRight } from 'lucide-react';
+import { FaLinkedinIn } from 'react-icons/fa6';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 export default function FoundersMessage() {
@@ -67,8 +68,19 @@ export default function FoundersMessage() {
 
           {/* AUTHOR */}
           <div className="founder-author">
-            <h3>Anoop Mathur</h3>
-            <span>Founder, CORE MEDIA</span>
+            <div>
+              <h3>Anoop Mathur</h3>
+              <span>Founder, CORE MEDIA</span>
+            </div>
+            <a
+              href="https://www.linkedin.com/in/mathuranoop?utm_source=share_via&utm_content=profile&utm_medium=member_ios"
+              className="founder-linkedin"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Open Anoop Mathur's LinkedIn profile"
+            >
+              <FaLinkedinIn aria-hidden="true" />
+            </a>
           </div>
 
           {/* BUTTON */}

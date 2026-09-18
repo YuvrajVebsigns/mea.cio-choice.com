@@ -121,23 +121,31 @@ export default function ProjectsSection() {
                   'Event',
               );
               const slug =
-                item.id && typeof item.id === 'string'
+                item.slug ||
+                (item.id && typeof item.id === 'string'
                   ? String(item.id)
                   : title
                       .toLowerCase()
                       .replace(/\s+/g, '-')
-                      .replace(/[^a-z0-9-]/g, '');
+                      .replace(/[^a-z0-9-]/g, ''));
 
-              const imageSrc = String(
-                item.image ?? item.heroImage ?? item.banner ?? '/assets/blogs/blog-1.webp',
-              );
+              const imageSrc = item.image || '/assets/blogs/blog-1.webp';
               const category = String(item.category ?? 'Events');
 
               return (
                 <Link key={slug} href={`/events/${slug}`}>
                   <div className="project-card" ref={index === 0 ? customLeftRef : customRightRef}>
                     <div className="project-image-wrap">
-                      <Image src={imageSrc} alt={title} fill className="project-image" />
+                      <Image
+                        src={imageSrc}
+                        alt={title}
+                        fill
+                        className="project-image"
+                        unoptimized
+                        onError={(event) => {
+                          event.currentTarget.src = '/assets/blogs/blog-1.webp';
+                        }}
+                      />
                     </div>
 
                     <div className="project-overlay">

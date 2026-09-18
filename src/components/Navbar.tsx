@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import { ArrowUpRight, ChevronDown, Menu, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 
-type DropdownName = 'process' | 'yearBook';
+type DropdownName = 'about' | 'process' | 'yearBook';
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -15,6 +15,7 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
+  const [aboutOpen, setAboutOpen] = useState(false);
   const [processOpen, setProcessOpen] = useState(false);
   const [yearBookOpen, setYearBookOpen] = useState(false);
 
@@ -23,6 +24,7 @@ export default function Navbar() {
   const dropdownTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   function closeAllDropdowns() {
+    setAboutOpen(false);
     setProcessOpen(false);
     setYearBookOpen(false);
   }
@@ -32,12 +34,13 @@ export default function Navbar() {
       clearTimeout(dropdownTimer.current);
     }
 
+    setAboutOpen(name === 'about');
     setProcessOpen(name === 'process');
     setYearBookOpen(name === 'yearBook');
   }
 
   function toggleDropdown(name: DropdownName) {
-    const isOpen = name === 'process' ? processOpen : yearBookOpen;
+    const isOpen = name === 'about' ? aboutOpen : name === 'process' ? processOpen : yearBookOpen;
 
     closeAllDropdowns();
 
@@ -186,13 +189,62 @@ export default function Navbar() {
           >
             Home
           </Link>
-          <Link
-            href="/about-us"
-            className={`nav-link ${pathname === '/about-us' ? 'active' : ''}`}
-            onClick={closeMobileMenu}
+          <div
+            className={`nav-dropdown ${aboutOpen ? 'open' : ''}`}
+            onMouseEnter={() => {
+              if (!isMobile) openDropdown('about');
+            }}
+            onMouseLeave={() => {
+              if (!isMobile) scheduleDropdownClose();
+            }}
           >
-            About Us
-          </Link>
+            <button
+              type="button"
+              className={`nav-link ${pathname === '/about-us' || pathname === '/foundermessage' ? 'active' : ''}`}
+              onClick={() => handleDropdownClick('about')}
+              aria-expanded={aboutOpen}
+            >
+              <span>About Us</span>
+              <ChevronDown size={16} />
+            </button>
+
+            <div className="mega-panel nav-year-dropdown">
+              <ul>
+                <li>
+                  <Link href="/about-us" className="mega-item" onClick={closeMobileMenu}>
+                    About CIO Choice
+                  </Link>
+                </li>
+                <li>
+                  <a
+                    href="https://core-mediagroup.com/"
+                    className="mega-item"
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={closeMobileMenu}
+                  >
+                    CORE Media Group
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://cxo-capital.com"
+                    className="mega-item"
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={closeMobileMenu}
+                  >
+                    CXO-Capital
+                  </a>
+                </li>
+                <li>
+                  <Link href="/foundermessage" className="mega-item" onClick={closeMobileMenu}>
+                    Founder&apos;s Message
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </div>
           <Link
             href="/advisory-panel"
             className={`nav-link ${pathname === '/advisory-panel' ? 'active' : ''}`}

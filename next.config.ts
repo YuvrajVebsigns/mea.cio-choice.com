@@ -13,6 +13,11 @@ const nextConfig: NextConfig = {
         hostname: 'coremediagroup.sgp1.digitaloceanspaces.com',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'cxo-capital.com',
+        pathname: '/**',
+      },
     ],
   },
 };

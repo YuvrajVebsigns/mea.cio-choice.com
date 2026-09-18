@@ -68,12 +68,12 @@ function BrandLogo({ name, logo }: { name: string; logo: string }) {
     <Image
       src={logo}
       alt={name}
-      width={180}
-      height={110}
+      width={240}
+      height={150}
       className="brand-logo"
       style={{
-        maxHeight: '110px',
-        maxWidth: '180px',
+        maxHeight: '150px',
+        maxWidth: '240px',
         objectFit: 'contain',
         margin: '0 auto 15px',
       }}

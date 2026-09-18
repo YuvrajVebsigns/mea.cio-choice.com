@@ -338,12 +338,13 @@ export default function EventsPage() {
               {events.map((item: WebsiteEvent, index: number) => {
                 const title = String(item.title ?? item.name ?? item.eventName ?? 'Event');
                 const slug =
-                  item.id && typeof item.id === 'string'
+                  item.slug ||
+                  (item.id && typeof item.id === 'string'
                     ? item.id
                     : title
                         .toLowerCase()
                         .replace(/\s+/g, '-')
-                        .replace(/[^a-z0-9-]/g, '');
+                        .replace(/[^a-z0-9-]/g, ''));
 
                 const imageSrc = getSafeImageSrc(item);
                 const category =

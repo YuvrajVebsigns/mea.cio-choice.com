@@ -1,4 +1,4 @@
-import { API_ENDPOINTS } from '@/constants/api';
+import { API_BASE_URL, API_ENDPOINTS } from '@/constants/api';
 import {
   buildWebsiteAuthHeaders,
   clearWebsiteAuth,
@@ -11,6 +11,7 @@ import { apiFetch } from '@/services/apiFetch';
 
 export type WebsiteEvent = {
   id: string;
+  slug?: string;
   title?: string;
   name?: string;
   eventName?: string;
@@ -30,9 +31,52 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null;
 }
 
+function getImageUrl(value: unknown): string {
+  if (typeof value === 'string') {
+    const imageUrl = value.trim();
+
+    if (!imageUrl) return '';
+    if (/^(https?:|data:|blob:|\/)/i.test(imageUrl)) return imageUrl;
+
+    return `${API_BASE_URL.replace(/\/$/, '')}/${imageUrl.replace(/^\//, '')}`;
+  }
+
+  if (Array.isArray(value)) {
+    return value.map(getImageUrl).find(Boolean) ?? '';
+  }
+
+  if (!isRecord(value)) return '';
+
+  const urlVariants = isRecord(value.urlVariants) ? value.urlVariants : null;
+  const nestedImage =
+    getImageUrl(value.data) || getImageUrl(value.file) || getImageUrl(value.media);
+
+  const candidates = [
+    value.url,
+    value.src,
+    value.imageUrl,
+    value.fileUrl,
+    value.secure_url,
+    value.path,
+    value.original,
+    value.large,
+    value.medium,
+    value.small,
+    value.thumbnail,
+    urlVariants?.large,
+    urlVariants?.medium,
+    urlVariants?.small,
+    urlVariants?.thumbnail,
+  ];
+
+  return candidates.map(getImageUrl).find(Boolean) ?? nestedImage;
+}
+
 function normalizeEvent(data: RawEvent, fallbackId = ''): WebsiteEvent {
   return {
+    ...data,
     id: String(data.id ?? data._id ?? data.eventId ?? data.uid ?? data.slug ?? fallbackId),
+    slug: typeof data.slug === 'string' && data.slug.trim() ? data.slug.trim() : undefined,
     title:
       typeof data.title === 'string'
         ? data.title
@@ -48,7 +92,15 @@ function normalizeEvent(data: RawEvent, fallbackId = ''): WebsiteEvent {
         : typeof data.startDate === 'string'
           ? data.startDate
           : undefined,
-    ...data,
+    image:
+      getImageUrl(data.image) ||
+      getImageUrl(data.bannerImage) ||
+      getImageUrl(data.bannerImageId) ||
+      getImageUrl(data.heroImage) ||
+      getImageUrl(data.banner) ||
+      getImageUrl(data.imageId) ||
+      getImageUrl(data.media) ||
+      undefined,
   };
 }
 
