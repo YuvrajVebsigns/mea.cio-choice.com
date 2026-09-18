@@ -335,6 +335,14 @@ export default function Navbar() {
             </div>
           </div>
 
+          <Link
+            href="/nominate"
+            className={`nav-link ${pathname === '/nominate' ? 'active' : ''}`}
+            onClick={closeMobileMenu}
+          >
+            Nomination
+          </Link>
+
           {/* <Link
             href="/contact"
             className={`nav-link ${pathname === '/contact' ? 'active' : ''}`}

@@ -16,6 +16,14 @@ export const API_ENDPOINTS = {
 
     TOKEN: '/api/v1/website/token',
 
+    NOMINATIONS: '/api/v1/website/nominations',
+
+    NOMINATION_STATUS: '/api/v1/website/nominations/status',
+
+    NOMINATION_CATEGORIES: '/api/v1/website/nominations/categories',
+
+    NOMINATION_SUB_CATEGORIES: '/api/v1/website/nominations/sub-categories',
+
     ANALYTICS: {
       TRACK: '/api/v1/website/analytics/track',
     },

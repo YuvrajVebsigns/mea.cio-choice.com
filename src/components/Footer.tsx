@@ -260,6 +260,10 @@ export default function Footer() {
                 </li>
 
                 <li>
+                  <Link href="/nominate">Nominate</Link>
+                </li>
+
+                <li>
                   <Link href="/#contact-section">Contact Us</Link>
                 </li>
               </ul>

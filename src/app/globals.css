@@ -166,75 +166,6 @@ body {
     top: auto;
     bottom: 68px;
     transform: none;
-
-    /* Nominate page - center red theme */
-    .nominate-wrapper {
-      display: flex;
-      justify-content: center;
-      padding: 24px 16px 48px;
-    }
-
-    .nominate-card {
-      width: 100%;
-      max-width: 920px;
-      background: #fff;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-    }
-
-    .nominate-card-header {
-      background: linear-gradient(90deg, #8e0101, #d32f2f);
-      color: white;
-      padding: 18px 24px;
-      font-weight: 700;
-      font-size: 18px;
-      text-align: center;
-    }
-
-    .nominate-card-body {
-      padding: 20px 28px 28px;
-    }
-
-    .nominate-sub {
-      text-align: center;
-      margin-bottom: 12px;
-      color: #333;
-    }
-
-    .btn-add {
-      background: #ff8a00;
-      color: white;
-      border: none;
-      padding: 10px 14px;
-      border-radius: 6px;
-    }
-
-    .nominate-submit-row {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      padding-bottom: 40px;
-    }
-
-    .nominate-submit {
-      background: linear-gradient(90deg, #b30000, #e53935);
-      border-radius: 8px;
-      padding: 12px 24px;
-    }
-    .nominate-submit-note {
-      color: #666;
-      align-self: center;
-    }
-
-    @media (max-width: 700px) {
-      .nominate-card {
-        margin: 0 8px;
-      }
-      .nominate-card-body {
-        padding: 16px;
-      }
-    }
     width: 70px;
     height: 70px;
   }
@@ -8497,142 +8428,239 @@ main.advisory-page {
 .nominate-page-container {
   width: 100%;
   min-height: 100vh;
-  padding: 100px 20px;
-  background: linear-gradient(135deg, #d7cccc 0%, #f3ebeb 40%, #f9f3f3 100%);
+  padding: 110px 20px;
+  background:
+    radial-gradient(circle at 10% 15%, rgba(142, 1, 1, 0.16), transparent 28%),
+    radial-gradient(circle at 90% 85%, rgba(142, 1, 1, 0.12), transparent 26%),
+    linear-gradient(135deg, #ffffff 0%, #f5eeee 55%, #eadede 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
-  overflow: hidden;
+  overflow: visible;
 }
-
-/* Decorative blur circles */
-
-.nominate-page-container::before,
-.nominate-page-container::after {
-  content: '';
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  z-index: 0;
-}
-
-.nominate-page-container::before {
-  width: 300px;
-  height: 300px;
-  background: rgba(255, 255, 255, 0.12);
-  top: -120px;
-  left: -100px;
-}
-
-.nominate-page-container::after {
-  width: 260px;
-  height: 260px;
-  background: rgba(255, 255, 255, 0.08);
-  bottom: -120px;
-  right: -100px;
-}
-
-/* =========================================
-   CONTAINER
-========================================= */
 
 .nominate-page-content {
   width: 100%;
-  max-width: 1100px;
+  max-width: 1180px;
   margin: 0 auto;
   position: relative;
   z-index: 2;
-  margin-top: 20px;
 }
 
-/* =========================================
-   TITLE
-========================================= */
-
-.nominate-page-content h1 {
-  font-size: 25px;
-  line-height: 1.1;
-  font-weight: 700;
-  color: #242424;
-  margin-bottom: 24px;
+.nominate-page-content > h1 {
+  display: block;
+  max-width: 980px;
+  margin: 0 auto 18px;
+  color: #8e0101;
+  font-size: clamp(30px, 4vw, 48px);
+  font-weight: 900;
+  line-height: 1.15;
+  text-align: center;
 }
 
-.nominate-page-content h3 {
-  font-size: 16px;
-  line-height: 0.9;
-  font-weight: 700;
-  color: #363434;
-  margin-top: 30px;
-  margin-bottom: 14px;
+.nominate-page-content > h3 {
+  display: block;
+  max-width: 980px;
+  margin: 28px auto 10px;
+  color: #8e0101;
+  font-size: 22px;
+  font-weight: 800;
+  text-align: center;
 }
 
-.nominate-page-content p,
-.nominate-page-content li {
+.nominate-page-content > p,
+.nominate-page-content > ol {
+  display: block;
+  max-width: 850px;
+  margin: 0 auto 16px;
+  color: #4b3f3f;
   font-size: 16px;
   line-height: 1.8;
-  color: #555555;
+  text-align: center;
 }
 
-.nominate-page-content ol {
-  padding-left: 22px;
-  margin-bottom: 18px;
+.nominate-page-content > ol {
+  text-align: left;
+  padding-left: 28px;
+  margin-bottom: 28px;
 }
 
-/* =========================================
-   CARD WRAPPER
-========================================= */
+.nominate-info-box {
+  max-width: 1050px;
+  margin: 0 auto 50px;
+  padding: 34px 38px;
+  background: rgba(255, 255, 255, 0.78);
+  border-radius: 22px;
+  border: 1px solid rgba(142, 1, 1, 0.14);
+  box-shadow: 0 18px 50px rgba(142, 1, 1, 0.12);
+}
+
+.nominate-info-box p {
+  margin: 0 0 10px;
+  color: #111;
+  font-size: 14px;
+  line-height: 1.65;
+  text-align: left;
+}
+
+.nominate-info-box p strong {
+  color: #000;
+  font-weight: 800;
+}
+
+.nominate-info-box h3 {
+  margin: 16px 0 8px;
+  color: #8e0101;
+  font-size: 17px;
+  font-weight: 900;
+}
+
+.nominate-info-box ol {
+  margin: 8px 0 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.nominate-info-box li {
+  margin-bottom: 7px;
+  color: #111;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.nominate-info-box li::before {
+  content: none;
+}
+
+.nominate-note {
+  margin-top: 10px !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  color: #000 !important;
+  font-size: 14px !important;
+  font-weight: 900;
+  line-height: 1.6;
+  box-shadow: none !important;
+}
+
+.nominate-note::before {
+  content: none !important;
+}
+
+.nominate-note strong {
+  color: #000 !important;
+}
 
 .nominate-wrapper {
-  margin-top: 50px;
-  width: 1100;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
 }
 
-/* =========================================
-   CARD
-========================================= */
-
 .nominate-card {
-  width: 160%;
-  max-width: 1200px;
-  border-radius: 28px;
-  background: rgba(255, 255, 255, 0.14);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid #9d1111;
-  box-shadow:
-    0 20px 60px rgba(0, 0, 0, 0.25),
-    inset 0 1px 1px rgba(255, 255, 255, 0.12);
-  overflow: hidden;
-  margin-right: -6px;
+  position: relative;
+  width: 100%;
+  overflow: visible;
+  border-radius: 34px;
+  background: #ffffff;
+  border: 1px solid rgba(142, 1, 1, 0.16);
+  box-shadow: 0 30px 80px rgba(40, 10, 10, 0.16);
+}
+
+.nominate-card::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 210px;
+  border-radius: 34px 0 0 34px;
+  background:
+    linear-gradient(180deg, rgba(142, 1, 1, 0.95), rgba(70, 0, 0, 0.95)),
+    radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.28), transparent 35%);
 }
 
 .nominate-card-header {
-  padding: 22px 30px;
-  background: linear-gradient(90deg, #8e0101, 0%, #9d1111 100%);
+  position: relative;
+  padding: 36px 42px 18px 250px;
+  background: transparent;
+  color: #8e0101;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+.nominate-card-header::before {
+  content: 'Nominate';
+  position: absolute;
+  left: 38px;
+  top: 42px;
   color: #ffffff;
-  font-size: 20px;
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.nominate-card-header::after {
+  content: 'Complete nominee details to submit your nomination.';
+  display: block;
+  margin-top: 8px;
+  color: #6a5555;
+  font-size: 14px;
   font-weight: 500;
-  letter-spacing: 1px;
+  text-transform: none;
+  letter-spacing: 0;
 }
 
 .nominate-card-body {
-  padding: 40px;
+  position: relative;
+  padding: 22px 42px 46px 250px;
 }
 
 .nominate-sub {
-  margin-bottom: 30px;
-  color: rgba(53, 51, 51, 0.8);
-  font-size: 15px;
+  margin: 0 0 24px;
+  color: #6a5555;
+  font-size: 14px;
   line-height: 1.7;
 }
 
-/* =========================================
-   FORM
-========================================= */
+.nominate-loading-section {
+  min-height: 360px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  padding: 48px 24px;
+  color: #8e0101;
+  text-align: center;
+}
+
+.nominate-loading-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.nominate-loading-spinner {
+  width: 48px;
+  height: 48px;
+  border: 5px solid rgba(142, 1, 1, 0.18);
+  border-top-color: #8e0101;
+  border-radius: 50%;
+  animation: nominate-loading-spin 800ms linear infinite;
+}
+
+@keyframes nominate-loading-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
 
 .nominate-form {
   width: 100%;
@@ -8640,60 +8668,134 @@ main.advisory-page {
 
 .nominate-fieldset {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
-  column-gap: 70px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px 34px;
+  border: 0;
+  padding: 0;
+  margin: 0;
 }
 
 .nominate-legend {
   grid-column: 1 / -1;
-  margin-bottom: 20px;
+  margin-bottom: 4px;
+  color: #8e0101;
+  font-size: 17px;
+  font-weight: 800;
 }
 
 .nominate-label {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   gap: 8px;
-  margin-bottom: 0;
-  font-size: 14px;
-  font-weight: 600;
-  color: #585555;
+  color: #4b3f3f;
+  font-size: 13px;
+  font-weight: 700;
+  position: relative;
 }
 
-/* =========================================
-   INPUTS
-========================================= */
+.nominate-label span {
+  min-height: 18px;
+}
 
-.nominate-input-field {
+.nominate-label > input,
+.nominate-label > select,
+.nominate-label > .custom-select-wrap {
   width: 100%;
-  height: 48px;
-  padding: 0 16px;
-  border: 2px solid #ddd;
-  border-radius: 999px;
-  background: #fff;
 }
+
+/* Input & Select */
+
+.nominate-input-field,
+.nominate-form select {
+  width: 100%;
+  height: 52px;
+  padding: 0 18px;
+  border: 1px solid rgba(142, 1, 1, 0.18);
+  border-radius: 14px;
+  background: #fff;
+  color: #231f1f;
+  font-size: 14px;
+  font-weight: 500;
+  box-sizing: border-box;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+/* Placeholder */
 
 .nominate-input-field::placeholder {
-  color: #8f8f8f;
+  color: #9b8b8b;
 }
 
-.nominate-input-field:focus {
-  outline: none;
-  border: 2px solid #8e0101;
-  box-shadow: 0 0 0 4px rgba(142, 1, 1, 0.15);
+/* Input Focus */
+
+.nominate-input-field:focus,
+.nominate-form select:focus {
+  border-color: #8e0101;
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(142, 1, 1, 0.1);
 }
 
-/* =========================================
-   CIO BLOCK
-========================================= */
+/* ===========================
+   Custom Dropdown
+=========================== */
+
+.nominate-form select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+
+  padding-right: 52px;
+
+  background-color: #fff;
+
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M6 9L12 15L18 9' stroke='%238e0101' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+
+  background-repeat: no-repeat;
+  background-position: right 18px center;
+  background-size: 18px;
+}
+
+.nominate-form select:hover {
+  border-color: rgba(142, 1, 1, 0.45);
+  background-color: #fffdfd;
+}
+
+.nominate-form select:focus {
+  border-color: #8e0101;
+  background-color: #fff;
+}
+
+.nominate-form select option {
+  background: #ffffff;
+  color: #333;
+  padding: 12px;
+}
+
+.nominate-form select option:first-child {
+  color: #9b8b8b;
+}
 
 .nominate-cio-block {
-  padding: 24px;
+  grid-column: 1 / -1;
+  padding: 22px;
   margin-bottom: 24px;
   border-radius: 24px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(157, 17, 17, 0.2);
+  background: #fffafa;
+  border: 1px solid rgba(142, 1, 1, 0.14);
+  transition: 0.25s ease;
+}
+
+.nominate-cio-block .nominate-fieldset {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 26px;
+}
+
+.nominate-cio-block:hover {
+  transform: translateY(-3px);
+  border-color: rgba(142, 1, 1, 0.26);
+  box-shadow: 0 14px 34px rgba(142, 1, 1, 0.12);
 }
 
 .nominate-cio-top {
@@ -8701,26 +8803,19 @@ main.advisory-page {
   align-items: center;
   justify-content: space-between;
   margin-bottom: 18px;
+  gap: 18px;
 }
 
 .nominate-cio-title {
   font-size: 18px;
-  font-weight: 700;
-  color: #363434;
+  font-weight: 800;
+  color: #8e0101;
 }
-
-/* =========================================
-   BUTTONS
-========================================= */
 
 .nominate-btn {
   border: none;
-  border-radius: 999px;
   cursor: pointer;
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease,
-    opacity 0.3s ease;
+  transition: 0.25s ease;
 }
 
 .nominate-btn:hover {
@@ -8728,37 +8823,38 @@ main.advisory-page {
 }
 
 .nominate-btn:disabled {
-  opacity: 0.6;
+  opacity: 0.55;
   cursor: not-allowed;
   transform: none;
 }
 
-.nominate-btn-primary {
-  height: 58px;
-  padding: 0 36px;
-  background: linear-gradient(90deg, #8e0101 0%, #9d1111 100%);
+.nominate-btn-primary,
+.nominate-submit {
+  height: 54px;
+  min-width: 230px;
+  padding: 0 34px;
+  border-radius: 14px;
+  background: linear-gradient(90deg, #8e0101, #b31919);
   color: #ffffff;
   font-size: 15px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  box-shadow: 0 10px 25px rgba(180, 0, 0, 0.3);
+  font-weight: 800;
+  box-shadow: 0 14px 30px rgba(142, 1, 1, 0.28);
 }
 
-.nominate-btn-primary:hover {
-  box-shadow: 0 16px 35px rgba(157, 17, 17, 0.35);
+.nominate-btn-primary:hover,
+.nominate-submit:hover {
+  box-shadow: 0 18px 38px rgba(142, 1, 1, 0.34);
 }
 
 .nominate-btn-add {
-  height: 54px;
-  padding: 0 28px;
-  background: rgba(255, 255, 255, 0.92);
-  color: #9d1111;
-  font-size: 15px;
-  font-weight: 700;
-}
-
-.nominate-btn-add:hover {
-  background: #ffffff;
+  height: 48px;
+  padding: 0 24px;
+  border-radius: 14px;
+  background: #fffafa;
+  color: #8e0101;
+  font-size: 14px;
+  font-weight: 800;
+  border: 1px solid rgba(142, 1, 1, 0.18);
 }
 
 .nominate-remove-btn {
@@ -8766,185 +8862,156 @@ main.advisory-page {
   border: none;
   color: #8e0101;
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 800;
   cursor: pointer;
 }
 
-/* =========================================
-   ADD BUTTON WRAP
-========================================= */
-
 .nominate-add-wrap {
-  margin-top: 10px;
+  margin-top: 18px;
 }
-
-/* =========================================
-   SUBMIT
-========================================= */
 
 .nominate-submit-row {
-  margin-left: 12cm;
-  margin-top: 35px;
+  margin-top: 30px;
   display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
   flex-direction: column;
-  gap: 14px;
-}
-
-.nominate-submit {
-  width: fit-content;
 }
 
 .nominate-submit-note {
-  margin-left: -5.1cm;
-  color: #666666;
+  margin: 0;
+  color: #6a5555;
   font-size: 13px;
   line-height: 1.6;
+  text-align: center;
 }
-
-/* =========================================
-   SUCCESS SECTION
-========================================= */
 
 .nominate-success-section {
   width: 100%;
   max-width: 700px;
   margin: 0 auto;
-  padding: 40px;
-  border-radius: 28px;
-  background: rgba(255, 255, 255, 0.14);
-  backdrop-filter: blur(16px);
-  border: 1px solid #9d1111;
-  box-shadow:
-    0 20px 60px rgba(0, 0, 0, 0.25),
-    inset 0 1px 1px rgba(255, 255, 255, 0.12);
+  padding: 44px 34px;
+  border-radius: 30px;
+  background: #ffffff;
+  border: 1px solid rgba(142, 1, 1, 0.16);
+  box-shadow: 0 30px 80px rgba(40, 10, 10, 0.16);
   text-align: center;
 }
 
 .nominate-success-section h1 {
-  font-size: 38px;
-  line-height: 1.2;
-  color: #363434;
-  margin-bottom: 20px;
+  color: #8e0101;
+  font-size: 34px;
+  font-weight: 800;
 }
 
 .nominate-success-section p {
   color: #555555;
   line-height: 1.8;
-  margin-bottom: 14px;
 }
 
 .nominate-success-section a {
-  color: #9d1111;
-  font-weight: 700;
+  color: #8e0101;
+  font-weight: 800;
   text-decoration: none;
 }
 
-/* =========================================
-   RESPONSIVE
-========================================= */
+/* Category occupies full width */
+.nominate-category-field {
+  grid-column: 1 / -1;
+}
+
+/* CIO form grid */
+.nominate-cio-block .nominate-fieldset,
+.nominate-cio-block {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px 24px;
+}
+
+/* Header spans both columns */
+.nominate-cio-top {
+  grid-column: 1 / -1;
+}
+
+/* Category spans both columns */
+.nominate-category-field {
+  grid-column: 1 / -1;
+}
+
+.nominate-category-row {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px 24px;
+  width: 100%;
+}
+
+.nominate-category-row .nominate-label {
+  min-width: 0;
+}
 
 @media (max-width: 768px) {
+  .nominate-category-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .nominate-cio-block {
+    grid-template-columns: 1fr;
+  }
+
+  .nominate-category-field,
+  .nominate-cio-top {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 900px) {
   .nominate-page-container {
-    padding: 70px 16px;
-    min-height: auto;
-  }
-
-  .nominate-page-content {
-    width: 100%;
-    margin-top: 0;
-  }
-
-  .nominate-page-content h1 {
-    font-size: 24px;
-    line-height: 1.25;
-  }
-
-  .nominate-page-content h3 {
-    font-size: 18px;
-    line-height: 1.3;
-  }
-
-  .nominate-page-content p,
-  .nominate-page-content li {
-    font-size: 14px;
-    line-height: 1.7;
-  }
-
-  .nominate-wrapper {
-    width: 100%;
-    margin-top: 20px;
+    padding: 80px 16px;
   }
 
   .nominate-card {
+    border-radius: 26px;
+  }
+
+  .nominate-card::before {
     width: 100%;
-    max-width: 100%;
-    margin-right: 0;
-    border-radius: 22px;
+    height: 110px;
+    border-radius: 26px 26px 0 0;
   }
 
   .nominate-card-header {
-    padding: 18px 20px;
-    font-size: 16px;
-    text-align: center;
+    padding: 150px 24px 18px;
+    font-size: 22px;
+  }
+
+  .nominate-card-header::before {
+    top: 38px;
+    left: 24px;
   }
 
   .nominate-card-body {
-    padding: 22px 18px;
+    padding: 24px;
   }
 
-  .nominate-fieldset {
+  .nominate-fieldset,
+  .nominate-cio-block .nominate-fieldset {
     grid-template-columns: 1fr;
-    gap: 18px;
-    column-gap: 0;
-  }
-
-  .nominate-label {
-    font-size: 13px;
-  }
-
-  .nominate-input-field {
-    height: 50px;
-    font-size: 14px;
-  }
-
-  .nominate-cio-block {
-    padding: 18px 14px;
-    border-radius: 20px;
   }
 
   .nominate-cio-top {
     flex-direction: column;
     align-items: flex-start;
-    gap: 10px;
   }
 
   .nominate-btn-add,
   .nominate-btn-primary,
   .nominate-submit {
     width: 100%;
-  }
-
-  .nominate-submit-row {
-    width: 100%;
-    margin-left: 0;
-    margin-top: 28px;
-    align-items: stretch;
-  }
-
-  .nominate-submit-note {
-    margin-left: 0;
-    margin-right: 0;
-    text-align: left;
-  }
-
-  .nominate-success-section {
-    width: 100%;
-    padding: 28px 22px;
-    border-radius: 22px;
-  }
-
-  .nominate-success-section h1 {
-    font-size: 26px;
   }
 }
 
@@ -8954,11 +9021,7 @@ main.advisory-page {
   }
 
   .nominate-card-body {
-    padding: 20px 14px;
-  }
-
-  .nominate-card-header {
-    font-size: 15px;
+    padding: 22px 16px;
   }
 }
 
