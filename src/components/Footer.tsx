@@ -1,169 +1,73 @@
-// 'use client';
-
-// import Link from 'next/link';
-// import Image from 'next/image';
-// import { Phone, Mail, Send } from 'lucide-react';
-// import { FaFacebookF, FaInstagram, FaLinkedinIn, FaXTwitter } from 'react-icons/fa6';
-
-// export default function Footer() {
-//   return (
-//     <footer className="footer-section">
-//       {/* MAIN FOOTER */}
-//       <div className="footer-main">
-//         <div className="footer-container">
-//           <div className="footer-grid">
-//             {/* COLUMN 1 */}
-//             <div className="footer-widget footer-brand">
-//               <Link href="/" className="footer-logo">
-//                 <Image
-//                   src="/assets/logo/Heading.png"
-//                   alt="Core Media"
-//                   width={180}
-//                   height={70}
-//                   priority
-//                 />
-//               </Link>
-
-//               <p className="footer-description">
-//                 Developing personalized customer journeys to increase customer satisfaction,
-//                 engagement, and long-term loyalty for business growth.
-//               </p>
-//             </div>
-
-//             {/* COLUMN 2 */}
-//             <div className="footer-widget">
-//               <h4 className="footer-title">Services</h4>
-
-//               <ul className="footer-links">
-//                 <li>
-//                   <Link href="/videos">Video</Link>
-//                 </li>
-
-//                 <li>
-//                   <Link href="/events">Events</Link>
-//                 </li>
-
-//                 <li>
-//                   <Link href="/dialoges">Dialogues</Link>
-//                 </li>
-//               </ul>
-//             </div>
-
-//             {/* COLUMN 3 */}
-//             <div className="footer-widget">
-//               <h4 className="footer-title">Resources</h4>
-
-//               <ul className="footer-links">
-//                 <li>
-//                   <Link href="/#contact-section">Contact Us</Link>
-//                 </li>
-
-//                 <li>
-//                   <Link href="/blog">Blog</Link>
-//                 </li>
-
-//                 <li>
-//                   <Link href="/register">Registration</Link>
-//                 </li>
-
-//                 <li>
-//                   <Link href="/nominate">Nominate</Link>
-//                 </li>
-//               </ul>
-//             </div>
-
-//             {/* COLUMN 4 */}
-//             <div className="footer-widget">
-//               <h4 className="footer-title">Subscribe</h4>
-
-//               <form className="footer-subscribe">
-//                 <input type="email" placeholder="Enter your email" className="footer-input" />
-
-//                 <button type="submit" className="footer-submit" aria-label="Subscribe">
-//                   <Send size={18} />
-//                 </button>
-//               </form>
-//               <br />
-//               <h4>Our Office</h4>
-//               <p className="footer-description">
-//                 Units Nos. 3037 – A1 Wing, 3rd Floor, Oberoi Garden Estate, Near Chandivali Studio,
-//                 Andheri (East), Mumbai – 400072, INDIA
-//               </p>
-
-//               {/* <label className="footer-checkbox">
-//                 <input type="checkbox" />
-
-//                 <span>
-//                   I agree to the{' '}
-//                   <Link href="/" className="footer-terms">
-//                     Terms & Conditions
-//                   </Link>
-//                 </span>
-//               </label> */}
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-
-//       {/* FOOTER BOTTOM */}
-//       <div className="footer-bottom">
-//         <div className="footer-container footer-bottom-wrapper">
-//           {/* CONTACT */}
-//           <div className="footer-contact">
-//             <a href="tel:+917506035537" className="footer-contact-item">
-//               <span className="footer-contact-icon">
-//                 <Phone size={15} />
-//               </span>
-
-//               <span className="footer-contact-text">+91 7506035537</span>
-//             </a>
-
-//             <a href="mailto:info@coremedia.com" className="footer-contact-item">
-//               <span className="footer-contact-icon">
-//                 <Mail size={15} />
-//               </span>
-
-//               <span className="footer-contact-text">contact@core-mediagroup.com</span>
-//             </a>
-//           </div>
-
-//           {/* SOCIAL */}
-//           <div className="footer-socials">
-//             <a href="https://www.facebook.com/" aria-label="Facebook">
-//               <FaFacebookF />
-//             </a>
-
-//             <a href="https://www.instagram.com/" aria-label="Instagram">
-//               <FaInstagram />
-//             </a>
-
-//             <a href="https://x.com/" aria-label="Twitter">
-//               <FaXTwitter />
-//             </a>
-
-//             <a href="https://www.linkedin.com/" aria-label="LinkedIn">
-//               <FaLinkedinIn />
-//             </a>
-//           </div>
-
-//           {/* COPYRIGHT */}
-//           <div className="footer-copy">© 2026 Core Media. All Rights Reserved.</div>
-//         </div>
-//       </div>
-//     </footer>
-//   );
-// }
-
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Phone, Mail, Send } from 'lucide-react';
-import { FaFacebookF, FaInstagram, FaLinkedinIn, FaXTwitter } from 'react-icons/fa6';
-import { useState } from 'react';
+import { FaFacebookF, FaLinkedinIn, FaXTwitter, FaYoutube } from 'react-icons/fa6';
 import { submitWebsiteSubscribe } from '@/services/subscribers.service';
+import footerData from '@/data/footer.json';
+
+interface FooterLink {
+  label: string;
+  href: string;
+}
+
+interface FooterColumn {
+  id: string;
+  title: string;
+  links: FooterLink[];
+}
+
+interface ContactItem {
+  type: 'phone' | 'email' | string;
+  label: string;
+  href: string;
+}
+
+interface SocialItem {
+  name: string;
+  href: string;
+  icon: 'facebook' | 'instagram' | 'twitter' | 'linkedin' | string;
+}
+
+interface FooterData {
+  brand: {
+    logo: string;
+    alt: string;
+    width: number;
+    height: number;
+    href: string;
+    description: string;
+  };
+  columns: FooterColumn[];
+  subscribe: {
+    title: string;
+    placeholder: string;
+  };
+  office: {
+    title: string;
+    addressLines: string[];
+  };
+  contacts: ContactItem[];
+  socials: SocialItem[];
+  copyright: string;
+}
+
+const SOCIAL_ICONS: Record<string, React.ReactNode> = {
+  facebook: <FaFacebookF />,
+  youtube: <FaYoutube />,
+  twitter: <FaXTwitter />,
+  linkedin: <FaLinkedinIn />,
+};
+
+const CONTACT_ICONS: Record<string, React.ReactNode> = {
+  phone: <Phone size={16} />,
+  email: <Mail size={16} />,
+};
 
 export default function Footer() {
+  const data: FooterData = footerData as FooterData;
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
@@ -201,82 +105,44 @@ export default function Footer() {
       <div className="footer-main">
         <div className="footer-container">
           <div className="footer-grid">
-            {/* Logo */}
+            {/* Brand Column */}
             <div className="footer-widget footer-brand">
-              <Link href="/" className="footer-logo">
+              <Link href={data.brand.href} className="footer-logo">
                 <Image
-                  src="/assets/logo/cio-white.png"
-                  alt="CIO Choice"
-                  width={180}
-                  height={70}
+                  src={data.brand.logo}
+                  alt={data.brand.alt}
+                  width={data.brand.width}
+                  height={data.brand.height}
                   priority
                 />
               </Link>
 
-              <p className="footer-description">
-                CIO Choice recognizes technology excellence and connects visionary CIOs, technology
-                leaders, and recognized brands across the Middle East & Africa.
-              </p>
+              <p className="footer-description">{data.brand.description}</p>
             </div>
 
-            {/* Quick Links */}
-            <div className="footer-widget">
-              <h4 className="footer-title">Quick Links</h4>
+            {/* Dynamic Link Columns */}
+            {data.columns.map((column) => (
+              <div key={column.id} className="footer-widget">
+                <h4 className="footer-title">{column.title}</h4>
 
-              <ul className="footer-links">
-                <li>
-                  <Link href="/">Home</Link>
-                </li>
-
-                <li>
-                  <Link href="/about-us">About Us</Link>
-                </li>
-
-                <li>
-                  <Link href="/advisory-panel">Advisory Panel</Link>
-                </li>
-
-                <li>
-                  <Link href="/recognized-brands">Recognized Brands</Link>
-                </li>
-
-                <li>
-                  <Link href="/red-carpet-night">Red Carpet Night</Link>
-                </li>
-              </ul>
-            </div>
-
-            {/* Process */}
-            <div className="footer-widget">
-              <h4 className="footer-title">Process</h4>
-
-              <ul className="footer-links">
-                <li>
-                  <Link href="/process-flow">Process & Flow</Link>
-                </li>
-
-                <li>
-                  <Link href="/enter">Enter</Link>
-                </li>
-
-                <li>
-                  <Link href="/nominate">Nominate</Link>
-                </li>
-
-                <li>
-                  <Link href="/#contact-section">Contact Us</Link>
-                </li>
-              </ul>
-            </div>
+                <ul className="footer-links">
+                  {column.links.map((link, index) => (
+                    <li key={index}>
+                      <Link href={link.href}>{link.label}</Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
 
             {/* Subscribe & Office */}
             <div className="footer-widget">
-              <h4 className="footer-title">Subscribe</h4>
+              <h4 className="footer-title">{data.subscribe.title}</h4>
 
               <form className="footer-subscribe" onSubmit={handleSubscribe}>
                 <input
                   type="email"
-                  placeholder="Enter your email"
+                  placeholder={data.subscribe.placeholder}
                   className="footer-input"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -307,18 +173,15 @@ export default function Footer() {
               )}
 
               <div style={{ marginTop: '24px' }}>
-                <h4 className="footer-title">Our Office</h4>
+                <h4 className="footer-title">{data.office.title}</h4>
 
                 <p className="footer-description">
-                  Units Nos. 3037 – A1 Wing, 3rd Floor,
-                  <br />
-                  Oberoi Garden Estate,
-                  <br />
-                  Near Chandivali Studio,
-                  <br />
-                  Andheri (East),
-                  <br />
-                  Mumbai – 400072, INDIA
+                  {data.office.addressLines.map((line, index) => (
+                    <span key={index}>
+                      {line}
+                      {index < data.office.addressLines.length - 1 && <br />}
+                    </span>
+                  ))}
                 </p>
               </div>
             </div>
@@ -326,55 +189,36 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Bottom */}
+      {/* Footer Bottom */}
       <div className="footer-bottom">
         <div className="footer-container footer-bottom-wrapper">
+          {/* Contacts */}
           <div className="footer-contact">
-            <a href="tel:+917506035537" className="footer-contact-item">
-              <Phone size={16} />
-              <span>+91 7506035537</span>
-            </a>
-
-            <a href="mailto:contact@core-mediagroup.com" className="footer-contact-item">
-              <Mail size={16} />
-              <span>contact@core-mediagroup.com</span>
-            </a>
+            {data.contacts.map((contact, index) => (
+              <a key={index} href={contact.href} className="footer-contact-item">
+                {CONTACT_ICONS[contact.type] || null}
+                <span>{contact.label}</span>
+              </a>
+            ))}
           </div>
 
+          {/* Socials */}
           <div className="footer-socials">
-            <a
-              href="https://www.facebook.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Facebook"
-            >
-              <FaFacebookF />
-            </a>
-
-            <a
-              href="https://www.instagram.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Instagram"
-            >
-              <FaInstagram />
-            </a>
-
-            <a href="https://x.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
-              <FaXTwitter />
-            </a>
-
-            <a
-              href="https://www.linkedin.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="LinkedIn"
-            >
-              <FaLinkedinIn />
-            </a>
+            {data.socials.map((social, index) => (
+              <a
+                key={index}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={social.name}
+              >
+                {SOCIAL_ICONS[social.icon] || null}
+              </a>
+            ))}
           </div>
 
-          <div className="footer-copy">© 2026 CIO Choice MEA. All Rights Reserved.</div>
+          {/* Copyright */}
+          <div className="footer-copy">{data.copyright}</div>
         </div>
       </div>
     </footer>

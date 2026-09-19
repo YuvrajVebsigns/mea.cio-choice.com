@@ -1,0 +1,109 @@
+{
+  "brand": {
+    "logo": "/assets/logo/cio-white.png",
+    "alt": "CIO Choice",
+    "width": 180,
+    "height": 70,
+    "href": "/",
+    "description": "CIO Choice recognizes technology excellence and connects visionary CIOs, technology leaders, and recognized brands across the Middle East & Africa."
+  },
+  "columns": [
+    {
+      "id": "quick-links",
+      "title": "Quick Links",
+      "links": [
+        {
+          "label": "Home",
+          "href": "/"
+        },
+        {
+          "label": "About Us",
+          "href": "/about-us"
+        },
+        {
+          "label": "Advisory Panel",
+          "href": "/advisory-panel"
+        },
+        {
+          "label": "Recognized Brands",
+          "href": "/recognized-brands"
+        },
+        {
+          "label": "Red Carpet Night",
+          "href": "/red-carpet-night"
+        }
+      ]
+    },
+    {
+      "id": "process",
+      "title": "Process",
+      "links": [
+        {
+          "label": "Process & Flow",
+          "href": "/process-flow"
+        },
+        {
+          "label": "Enter",
+          "href": "/enter"
+        },
+        {
+          "label": "Nominate",
+          "href": "/nominate"
+        },
+        {
+          "label": "Contact Us",
+          "href": "/#contact-section"
+        }
+      ]
+    }
+  ],
+  "subscribe": {
+    "title": "Subscribe",
+    "placeholder": "Enter your email"
+  },
+  "office": {
+    "title": "Our Office",
+    "addressLines": [
+      "Units Nos. 3037 – A1 Wing, 3rd Floor,",
+      "Oberoi Garden Estate,",
+      "Near Chandivali Studio,",
+      "Andheri (East),",
+      "Mumbai – 400072, INDIA"
+    ]
+  },
+  "contacts": [
+    {
+      "type": "phone",
+      "label": "+971 56 113 6505",
+      "href": "tel:+971561136505"
+    },
+    {
+      "type": "email",
+      "label": "contact@cxo-capital.com",
+      "href": "mailto:contact@cxo-capital.com"
+    }
+  ],
+  "socials": [
+    {
+      "name": "Facebook",
+      "href": "https://www.facebook.com/CIOChoice.in",
+      "icon": "facebook"
+    },
+    {
+      "name": "Youtube",
+      "href": "https://www.youtube.com/@coremedia228",
+      "icon": "youtube"
+    },
+    {
+      "name": "X",
+      "href": "https://x.com/CIOChoice",
+      "icon": "twitter"
+    },
+    {
+      "name": "LinkedIn",
+      "href": "https://in.linkedin.com/company/core-mediagroup",
+      "icon": "linkedin"
+    }
+  ],
+  "copyright": "© 2026 CIO Choice MEA. All rights reserved."
+}
