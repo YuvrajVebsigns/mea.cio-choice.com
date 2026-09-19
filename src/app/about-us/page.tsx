@@ -88,10 +88,10 @@ export default function AboutUs() {
               ICT decision makers.
             </p>
           </div>
-
+          {/* 
           <div className="quote-box">
             <h3>&quot;By the CIOs, For the CIOs.&quot;</h3>
-          </div>
+          </div> */}
 
           <div className="content-card">
             <p>
