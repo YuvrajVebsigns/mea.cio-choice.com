@@ -11,7 +11,7 @@ type DropdownName = 'about' | 'process' | 'yearBook';
 export default function Navbar() {
   const pathname = usePathname();
 
-  // const [isHidden, setIsHidden] = useState(false);
+  const [isHidden, setIsHidden] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -19,8 +19,6 @@ export default function Navbar() {
   const [processOpen, setProcessOpen] = useState(false);
   const [yearBookOpen, setYearBookOpen] = useState(false);
 
-  // const lastScrollY = useRef(0);
-  // const hideTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const dropdownTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   function closeAllDropdowns() {
@@ -73,12 +71,7 @@ export default function Navbar() {
       clearTimeout(dropdownTimer.current);
     }
 
-    // if (hideTimer.current) {
-    //   clearTimeout(hideTimer.current);
-    // }
-
     setMobileOpen(false);
-    // setIsHidden(false);
     closeAllDropdowns();
   }
 
@@ -118,53 +111,44 @@ export default function Navbar() {
     };
   }, [mobileOpen]);
 
-  // useEffect(() => {
-  //   lastScrollY.current = window.scrollY;
+  useEffect(() => {
+    function handleScroll() {
+      const currentScrollY = window.scrollY;
 
-  //   function handleScroll() {
-  //     const current = window.scrollY;
-  //     const diff = current - lastScrollY.current;
+      if (pathname === '/') {
+        // On home page: hide when at the hero section (top), show when scrolled
+        if (currentScrollY <= 60) {
+          setIsHidden(true);
+        } else {
+          setIsHidden(false);
+        }
+      } else {
+        // On inner pages: navbar is visible
+        setIsHidden(false);
+      }
+    }
 
-  //     if (Math.abs(diff) < 8) return;
+    handleScroll();
 
-  //     if (hideTimer.current) {
-  //       clearTimeout(hideTimer.current);
-  //     }
+    window.addEventListener('scroll', handleScroll, {
+      passive: true,
+    });
 
-  //     if (diff < 0) {
-  //       setIsHidden(false);
-  //     }
-
-  //     if (diff > 0 && current > 140 && !mobileOpen) {
-  //       hideTimer.current = setTimeout(() => {
-  //         setIsHidden(true);
-  //       }, 180);
-  //     }
-
-  //     lastScrollY.current = current;
-  //   }
-
-  //   window.addEventListener('scroll', handleScroll, {
-  //     passive: true,
-  //   });
-
-  //   return () => {
-  //     window.removeEventListener('scroll', handleScroll);
-
-  //     if (hideTimer.current) clearTimeout(hideTimer.current);
-
-  //     if (dropdownTimer.current) clearTimeout(dropdownTimer.current);
-  //   };
-  // }, [mobileOpen]);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [pathname]);
 
   return (
-    // <header
-    //   className={['navbar', isHidden ? 'navbar-hide' : '', mobileOpen ? 'mobile-open' : '']
-    //     .filter(Boolean)
-    //     .join(' ')}
-    // >
-
-    <header className={`navbar ${mobileOpen ? 'mobile-open' : ''}`}>
+    <header
+      className={[
+        'navbar',
+        isHidden && !mobileOpen ? 'navbar-hide' : '',
+        mobileOpen ? 'mobile-open' : '',
+      ]
+        .filter(Boolean)
+        .join(' ')}
+    >
       <div className="navbar-container">
         <Link
           href="/"
