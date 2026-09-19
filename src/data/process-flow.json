@@ -1,0 +1,65 @@
+{
+  "hero": {
+    "label": "Process & Flow",
+    "title": "CIO CHOICE has a 3 stage easy and simple process",
+    "description": "The CIO CHOICE recognition process is designed to ensure fairness, transparency and credibility through application validation, advisory panel review and independent CIO nomination surveys."
+  },
+  "stages": [
+    {
+      "id": "stage-1",
+      "title": "Stage 1: Call for Applications",
+      "defaultOpen": true,
+      "items": [
+        "The advisory panel comprises of industry leaders and CIOs from various fields, including manufacturing, banking, pharma, travel & logistics and marketing.",
+        "All products, solutions and/or services entries received are filtered by the advisory panel for validation and the names are drawn up in each category.",
+        "All applications are collated and segregated by the CIO CHOICE secretariat team as per their relevant categories.",
+        "ICT Companies apply for the CIO CHOICE recognition title based on the categories of their offering – product, solution and/ or services.",
+        "ICT Companies keen to participate are invited to fill in the application so that the secretariat team can work with them for validation and reference checks if necessary.",
+        "Entry is open to all ICT products, services and/ or solutions launched and available in the Middle East & Africa over the past 12 months. The application fee to enter in the process is USD 1000/- per product, solution and/or services. NB: Products are entered for the whole process and cannot withdraw at any stage once entered.",
+        "Substantial media investment ensures there is visible coverage and understanding for receiving the honor title through the CIO CHOICE website.",
+        "Post validation by this panel of experts, the eligible products, solutions and/or services move to the next important stage of the CIO survey process.",
+        "The CIOs determine and choose the products that will be honored by the CIO CHOICE recognition.",
+        "An Independent Survey will be conducted through online responses from CIO community.",
+        "Responses of CIOs are collated through survey questionnaires across the country asking for their inputs on the products, solutions and/or services by categories as selected by the advisory panel.",
+        "The CIOs responses for the said products, solutions and/or services in each category will determine which of them will be bestowed by the CIO CHOICE recognition title."
+      ]
+    },
+    {
+      "id": "stage-2",
+      "title": "Stage 2: CIO CHOICE Advisory Panel",
+      "defaultOpen": false,
+      "items": [
+        "All products, solutions and/or services entries received are filtered for validation and the names are drawn up in each category.",
+        "The advisory panel comprises of industry leaders and CIOs from various fields, including manufacturing, banking, pharma, travel & logistics and marketing.",
+        "The eligible products, solutions and/or services move to the next important stage of the CIO nomination survey process."
+      ]
+    },
+    {
+      "id": "stage-3",
+      "title": "Stage 3: CIOs via a nomination survey decide their preferred Products, Solutions and/or Services from the list",
+      "defaultOpen": false,
+      "items": [
+        "The CIOs determine and choose the products that will be honored by the CIO CHOICE recognition.",
+        "An Independent Nomination Survey will be conducted through online responses from CIO community.",
+        "Responses of CIOs are collated through the nomination survey across the country asking for their preferred products, solutions and/or services by categories.",
+        "The CIOs responses for the said products, solutions and/or services in each category will determine which of them will be bestowed by the CIO CHOICE recognition title."
+      ]
+    },
+    {
+      "id": "recognition",
+      "title": "The Recognition",
+      "defaultOpen": false,
+      "paragraphs": [
+        "This will be done in the grand gala evening with a large gathering of CXO guests from the ICT space invited to celebrate the ICT companies being honored by the CIO CHOICE recognition title in each category."
+      ]
+    },
+    {
+      "id": "promotion",
+      "title": "Honored Products Promote the Recognition",
+      "defaultOpen": false,
+      "items": [
+        "Post the official announcement for a period of one calendar year, ICT Companies honored can use the “CIO CHOICE” title logo for the year on their packaging, promotions, advertising and marketing campaigns. For the first time, CIOs will enjoy the vote of confidence of fellow CIOs to help them select the best products, solutions and/or services from ICT companies. The products, solutions and/or services inadvertently will savor the advantage and benefits of high awareness and visibility thereby, leading to potential increase in sales."
+      ]
+    }
+  ]
+}
