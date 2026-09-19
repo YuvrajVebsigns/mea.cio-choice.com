@@ -13883,43 +13883,254 @@ s .dialogues-badge-mark {
 
 .year-book-page {
   min-height: 100vh;
-  padding: 150px 20px 90px;
-  background: linear-gradient(135deg, #fff, #fff5f5);
-  text-align: center;
+  padding: 150px 16px 72px;
+  background: linear-gradient(135deg, #fff 0%, #fff 68%, #fff5f5 100%);
 }
 
-.year-book-hero {
-  max-width: 760px;
-  margin: 0 auto 50px;
+.year-book-reader {
+  width: min(100%, 1280px);
+  margin: 0 auto;
 }
 
-.year-book-hero h1 {
-  margin: 24px 0 16px;
-  color: #8e0101;
-  font-size: clamp(2.25rem, 5vw, 4.5rem);
+.year-book-heading {
+  position: relative;
+  width: fit-content;
+  margin: 0 auto 28px;
+  color: #970808;
+  font-size: clamp(1.6rem, 3vw, 2.15rem);
   font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1.15;
+  text-align: center;
+  animation: year-book-heading-in 600ms ease-out both;
 }
 
-.year-book-hero p {
-  max-width: 620px;
-  margin: 0 auto;
-  color: #666;
-  font-size: 1.1rem;
-  line-height: 1.7;
-}
-
-.year-book-cover {
-  max-width: 900px;
-  margin: 0 auto;
-  overflow: hidden;
-  border-radius: 18px;
-  box-shadow: 0 20px 50px rgba(142, 1, 1, 0.16);
-}
-
-.year-book-cover img {
+.year-book-heading::after {
   display: block;
-  width: 100%;
-  height: auto;
+  width: 46%;
+  height: 3px;
+  margin: 10px auto 0;
+  border-radius: 999px;
+  background: #c7962c;
+  content: '';
+  transition: width 220ms ease;
+}
+
+.year-book-heading:hover::after {
+  width: 72%;
+}
+
+.year-book-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(24px, 6vw, 90px);
+}
+
+.year-book-book {
+  position: relative;
+  width: min(78vw, 650px);
+  aspect-ratio: 1.05;
+  perspective: 1800px;
+}
+
+.year-book-page-sheet {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 18px 38px rgba(80, 20, 20, 0.15);
+}
+
+.year-book-page-sheet {
+  left: 0;
+  right: 0;
+  border-radius: 5px 10px 10px 5px;
+  transform-origin: left center;
+  backface-visibility: hidden;
+}
+
+.year-book-book > .year-book-page-sheet {
+  z-index: 2;
+  cursor: pointer;
+}
+
+.year-book-next-spread {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.year-book-next-spread .year-book-page-sheet {
+  right: 50%;
+  border-radius: 6px 0 0 6px;
+}
+
+.year-book-next-spread .year-book-page-right {
+  left: 50%;
+  right: 0;
+  border-left: 1px solid rgba(100, 60, 30, 0.14);
+  border-radius: 0 6px 6px 0;
+}
+
+.year-book-next-spread.is-cover .year-book-page-sheet {
+  right: 0;
+  border-radius: 5px 10px 10px 5px;
+}
+
+.year-book-book.is-cover {
+  width: min(54vw, 390px);
+  aspect-ratio: 0.5;
+}
+
+.year-book-book.is-spread .year-book-page-sheet {
+  right: 50%;
+  border-radius: 6px 0 0 6px;
+}
+
+.year-book-book.is-spread .year-book-page-right {
+  left: 50%;
+  right: 0;
+  border-left: 1px solid rgba(100, 60, 30, 0.14);
+  border-radius: 0 6px 6px 0;
+}
+
+.year-book-book.is-turning.next .year-book-page-sheet {
+  animation: none;
+}
+
+.year-book-book.is-turning.previous .year-book-page-sheet {
+  animation: none;
+}
+
+.year-book-book.is-turning.next .is-turning-right {
+  z-index: 3;
+  transform-origin: left center;
+  animation: year-book-turn-next 560ms ease-in-out forwards;
+}
+
+.year-book-book.is-cover.is-turning.next > .year-book-page-sheet {
+  z-index: 3;
+  transform-origin: right center;
+  animation: year-book-turn-next-cover 560ms ease-in-out forwards;
+}
+
+.year-book-book.is-turning.previous .is-turning-left {
+  z-index: 3;
+  transform-origin: right center;
+  animation: year-book-turn-previous 560ms ease-in-out forwards;
+}
+
+.year-book-page-sheet img {
+  display: block;
+  object-fit: contain;
+}
+
+.year-book-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.year-book-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 36px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: #fff;
+  color: #ac0808;
+  box-shadow: 0 8px 18px rgba(80, 20, 20, 0.12);
+  cursor: pointer;
+  transition:
+    background 180ms ease,
+    color 180ms ease,
+    opacity 180ms ease;
+}
+
+.year-book-arrow:hover:not(:disabled) {
+  background: #ac0808;
+  color: #fff;
+}
+
+.year-book-arrow:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.year-book-page-count {
+  margin: 0;
+  padding: 7px 18px;
+  border-radius: 999px;
+  background: #fff;
+  color: #ac0808;
+  box-shadow: 0 8px 18px rgba(80, 20, 20, 0.1);
+  font-size: 0.78rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+@keyframes year-book-turn-next {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(-180deg);
+  }
+}
+
+@keyframes year-book-turn-previous {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(180deg);
+  }
+}
+
+@keyframes year-book-turn-next-cover {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(180deg);
+  }
+}
+
+@keyframes year-book-heading-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 640px) {
+  .year-book-page {
+    padding: 110px 8px 56px;
+  }
+
+  .year-book-controls {
+    gap: 8px;
+  }
+
+  .year-book-control {
+    min-width: auto;
+    padding: 10px 12px;
+  }
+
+  .year-book-control span {
+    display: none;
+  }
 }
 
 /* Center Section */
@@ -13997,11 +14208,19 @@ s .dialogues-badge-mark {
 
 @media (max-width: 768px) {
   .red-carpet-page {
-    padding: 90px 15px 50px;
+    padding: 112px 8px 56px;
   }
 
-  .poster-container {
-    max-width: 100%;
+  .year-book-stage {
+    gap: 10px;
+  }
+
+  .year-book-book {
+    width: calc(100vw - 68px);
+  }
+
+  .year-book-book.is-cover {
+    width: min(76vw, 390px);
   }
 }
 
