@@ -29,30 +29,31 @@ export default function EnterPage() {
 
           <div className="enter-card-content">
             <p>
+              <p>
+                <a href="/research">CLICK HERE</a>
+              </p>
+              TO DOWNLOAD FORM. Please download the form from the link provided and fill in the
+              details as per the form requirement. It is mandatory to fill each section.
+            </p>
+
+            <p>
+              <strong>CATEGORY SELECTION:</strong> You are required to select the category of
+              recognition your Product/ Service/ Solution falls into. If your Product/ Service/
+              Solution does not fit any of the categories listed, please contact us on{' '}
               <a
-                href="https://www.cio-choice.in/wp-content/uploads/2025/07/CIO-CHOICE-Entry-Form-2026.docx"
+                href="https://mail.google.com/mail/?view=cm&fs=1&to=contact@core-mediagroup.com&su=Enquiry"
                 target="_blank"
                 rel="noopener noreferrer"
+                className="footer-contact-item"
               >
-                CLICK HERE TO DOWNLOAD FORM
+                contact@core-mediagroup.com
               </a>
-            </p>
-
-            <p>
-              Please download the form from the link provided and fill in the details as per the
-              form requirement. It is mandatory to complete every section.
-            </p>
-
-            <p>
-              If your Product/ Service/ Solution does not fit any of the categories listed below,
-              please contact us at{' '}
-              <a href="mailto:contact@cxo-capital.com">contact@cxo-capital.com</a> and we will
-              incorporate it into the list, subject to suitability.
+              .
             </p>
 
             <p>
               <strong>DESCRIPTION:</strong> Please enter a paragraph of no more than 100 words
-              describing your Product/ Service/ Solution and its innovative or associated features.
+              describing your Product/ Service/ Solution and its innovative/associated features.
             </p>
 
             <p>
@@ -62,13 +63,12 @@ export default function EnterPage() {
             </p>
 
             <p>
-              <strong>ENTRIES:</strong> You are allowed to submit one Product/ Service/ Solution per
-              entry. Multiple entries are permitted using a fresh form for each different Product/
-              Service/ Solution, even if they belong to the same brand.
+              <strong>ENTRIES:</strong> You can fill in multiple entries using a fresh form for each
+              Product/ Service/ Solution.
             </p>
 
             <p>
-              <strong>NOTE:</strong> For assistance while completing the descriptions, feel free to
+              <strong>NOTE:</strong> For assistance while filling the descriptions, feel free to
               contact us.
             </p>
           </div>

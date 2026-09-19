@@ -38,6 +38,10 @@ export const API_ENDPOINTS = {
       REGISTER: '/api/v1/website/attendees/register',
     },
 
+    REPORTS: {
+      DOWNLOAD: '/api/v1/website/reports/download',
+    },
+
     EVENTS: {
       BASE: '/api/v1/website/events',
       BY_ID: (id: string) => `/api/v1/website/events/${encodeURIComponent(id)}`,

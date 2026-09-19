@@ -1,36 +1,56 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import type { Country } from 'react-phone-number-input';
 import CountryCodeSelect, { getDialCodeFromCountry } from '@/components/CountryCodeSelect';
-import { submitAttendeeRegistration } from '@/services/attendees.service';
+import { downloadWebsiteReport } from '@/services/reports.service';
+
+// const industries = [
+//   '',
+//   'ASSET MANAGEMENT (AMC)',
+//   'AUTOMOBILES & AUTO ANCILLARIES',
+//   'BANKING',
+//   'CHEMICALS',
+//   'CONSULTING',
+//   'DIVERSIFIED GROUP',
+//   'E-COMMERCE',
+//   'EDUCATION',
+//   'ENGINEERING',
+//   'FINANCIAL SERVICES',
+//   'FMCG',
+//   'HEALTHCARE & PHARMA',
+//   'INSURANCE',
+//   'Information Technology',
+//   'IT, BPO & ITES',
+//   'MANUFACTURING',
+//   'MEDIA & ENTERTAINMENT',
+//   'NBFC',
+//   'REALTY',
+//   'RETAIL',
+// ];
 
 const industries = [
   '',
-  'ASSET MANAGEMENT (AMC)',
-  'AUTOMOBILES & AUTO ANCILLARIES',
-  'BANKING',
-  'CHEMICALS',
-  'CONSULTING',
-  'DIVERSIFIED GROUP',
-  'E-COMMERCE',
-  'EDUCATION',
-  'ENGINEERING',
-  'FINANCIAL SERVICES',
-  'FMCG',
-  'HEALTHCARE & PHARMA',
-  'INSURANCE',
-  'IT, BPO & ITES',
-  'MANUFACTURING',
-  'MEDIA & ENTERTAINMENT',
-  'NBFC',
-  'REALTY',
-  'RETAIL',
+  'SOFTWARE',
+  'CLOUD SERVICES',
+  'HARDWARE, NETWORK & STORAGE',
+  'DATA CENTER & IT INFRASTRUCTURE',
+  'SECURITY',
+  'TELECOM SERVICES',
+  'RISK MANAGEMENT',
+  'SYSTEM INTEGRATION',
+  'DATA RECOVERY',
+  'VIRTUALIZATION',
+  'IT SERVICES',
+  'SAAS AND CLOUD SOLUTIONS',
+  'ADVISORY & RESEARCH',
+  'EMERGING TECHNOLOGIES',
+  'ENTERPRISE MOBILITY',
+  'COLLABORATION AND WORK FROM HOME',
 ];
 
 export default function RegisterPage() {
-  const router = useRouter();
+  const [reportId, setReportId] = useState('6aaed8a77feb42b50fb395dc');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [companyName, setCompanyName] = useState('');
@@ -41,6 +61,19 @@ export default function RegisterPage() {
   const [industry, setIndustry] = useState('');
   const [popupMessage, setPopupMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+
+    setReportId(params.get('reportId') || '6aaed8a77feb42b50fb395dc');
+    setFirstName(params.get('firstName') || '');
+    setLastName(params.get('lastName') || '');
+    setEmail(params.get('email') || '');
+    setPhone(params.get('phoneNumber') || '');
+    setCompanyName(params.get('companyName') || '');
+    setDesignation(params.get('designation') || '');
+    setIndustry(params.get('industry') || '');
+  }, []);
 
   const [errors, setErrors] = useState<{
     firstName?: string;
@@ -121,35 +154,23 @@ export default function RegisterPage() {
     setPopupMessage(null);
 
     try {
-      const response = await submitAttendeeRegistration({
-        eventId: 'business-pulse-report',
-        name: `${firstName.trim()} ${lastName.trim()}`,
+      const downloadUrl = await downloadWebsiteReport({
         email: email.trim(),
+        firstName: firstName.trim(),
+        lastName: lastName.trim(),
         phoneNumber: trimmedPhone,
         countryCode: dialCode,
-        organization: companyName.trim(),
+        companyName: companyName.trim(),
+        designation: designation.trim(),
+        industry,
+        reportId,
       });
 
-      const apiMessage =
-        response && typeof response === 'object' && 'message' in response
-          ? String((response as { message?: string }).message)
-          : '';
-
-      setPopupMessage(apiMessage || 'Registration successful — thank you!');
-      setFirstName('');
-      setLastName('');
-      setCompanyName('');
-      setDesignation('');
-      setEmail('');
-      setCountry('IN');
-      setPhone('');
-      setIndustry('');
-      setErrors({});
+      window.location.assign(downloadUrl);
     } catch (err) {
       setPopupMessage(err instanceof Error ? err.message : 'Network error. Please try again.');
     } finally {
       setLoading(false);
-      router.push('/research/download-report');
     }
   }
 
@@ -171,9 +192,11 @@ export default function RegisterPage() {
             </div>
           ) : null}
 
-          <h2 className="registration-title">CIO OUTLOOK SURVEY 2021 - BUSINESS PULSE REPORT</h2>
+          {/* <h2 className="registration-title">CIO OUTLOOK SURVEY 2021 - BUSINESS PULSE REPORT</h2> */}
+          <h2 className="registration-title">CIO CHOICE 2027 – ENTRY FORM</h2>
 
           <form onSubmit={handleSubmit} className="registration-form">
+            <input type="hidden" name="reportId" value={reportId} />
             <label className="registration-label">
               First Name *
               <input
