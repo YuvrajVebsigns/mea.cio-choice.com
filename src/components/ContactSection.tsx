@@ -429,13 +429,12 @@ export default function ContactSection() {
      CLOUDFLARE SITE KEY
   ========================================================= */
 
-  const turnstileSiteKey = process.env.NEXT_PUBLIC_SITEKEY?.trim() || '';
+  const turnstileSiteKey =
+    process.env.NEXT_PUBLIC_SITEKEY?.trim() ||
+    (process.env.NODE_ENV !== 'production' ? '1x00000000000000000000AA' : '');
 
   /* =========================================================
      FORM COMPLETION CHECK
-     
-     CAPTCHA "I'm human" button will only become enabled
-     after all required fields contain a value.
   ========================================================= */
 
   const isFormComplete =
@@ -446,7 +445,7 @@ export default function ContactSection() {
     message.trim().length > 0;
 
   /* =========================================================
-     LOAD CLOUDFLARE TURNSTILE
+     LOAD CLOUDFLARE TURNSTILE (AUTO-VERIFY)
   ========================================================= */
 
   useEffect(() => {
@@ -487,6 +486,8 @@ export default function ContactSection() {
       }
 
       try {
+        setCaptchaStatus('verifying');
+
         const widgetId = window.turnstile.render(turnstileContainerRef.current, {
           /*
            * PUBLIC CLOUDFLARE SITE KEY
@@ -499,10 +500,9 @@ export default function ContactSection() {
           size: 'invisible',
 
           /*
-           * Verification starts only when execute()
-           * is called.
+           * Automatic verification on render.
            */
-          execution: 'execute',
+          execution: 'render',
 
           theme: 'light',
 
@@ -527,7 +527,7 @@ export default function ContactSection() {
           },
 
           /*
-           * Token expired.
+           * Token expired - auto refresh.
            */
           'expired-callback': () => {
             if (cancelled) {
@@ -536,11 +536,7 @@ export default function ContactSection() {
 
             setCaptchaToken('');
 
-            setCaptchaStatus('ready');
-
-            setIsRefreshingCaptcha(false);
-
-            setPopupMessage('CAPTCHA verification expired. Please verify again.');
+            resetTurnstile();
           },
 
           /*
@@ -567,7 +563,7 @@ export default function ContactSection() {
           },
 
           /*
-           * Verification timeout.
+           * Verification timeout - auto refresh.
            */
           'timeout-callback': () => {
             if (cancelled) {
@@ -576,11 +572,7 @@ export default function ContactSection() {
 
             setCaptchaToken('');
 
-            setCaptchaStatus('ready');
-
-            setIsRefreshingCaptcha(false);
-
-            setPopupMessage('CAPTCHA verification timed out. Please try again.');
+            resetTurnstile();
           },
         });
 
@@ -595,8 +587,6 @@ export default function ContactSection() {
         }
 
         turnstileWidgetIdRef.current = widgetId;
-
-        setCaptchaStatus('ready');
       } catch {
         setCaptchaStatus('error');
 
@@ -694,121 +684,19 @@ export default function ContactSection() {
   }, [popupMessage]);
 
   /* =========================================================
-     START CLOUDFLARE VERIFICATION
-
-     CAPTCHA can ONLY start after the entire form
-     has been completed.
-  ========================================================= */
-
-  function startCaptchaVerification() {
-    /*
-     * Prevent verification while submitting.
-     */
-    if (isSubmitting) {
-      return;
-    }
-
-    /*
-     * Do not allow CAPTCHA before all form fields
-     * have been completed.
-     */
-    if (!isFormComplete) {
-      setPopupMessage('Please complete all required fields before CAPTCHA verification.');
-
-      return;
-    }
-
-    /*
-     * Make sure Turnstile is loaded.
-     */
-    if (!window.turnstile) {
-      setCaptchaStatus('error');
-
-      setPopupMessage('CAPTCHA is still loading. Please try again.');
-
-      return;
-    }
-
-    /*
-     * Make sure the widget exists.
-     */
-    if (!turnstileWidgetIdRef.current) {
-      setCaptchaStatus('error');
-
-      setPopupMessage('CAPTCHA is not ready. Please refresh the page and try again.');
-
-      return;
-    }
-
-    /*
-     * Do not execute again if already verified.
-     */
-    if (captchaToken) {
-      return;
-    }
-
-    try {
-      setCaptchaStatus('verifying');
-
-      setIsRefreshingCaptcha(false);
-
-      setPopupMessage(null);
-
-      window.turnstile.execute(turnstileWidgetIdRef.current);
-    } catch {
-      setCaptchaStatus('error');
-
-      setPopupMessage('Unable to start CAPTCHA verification. Please try again.');
-    }
-  }
-
-  /* =========================================================
      REFRESH / RESET TURNSTILE
-
-     IMPORTANT:
-     This function intentionally does NOT clear popupMessage.
-
-     This means:
-
-     setPopupMessage('Thank you!');
-     resetTurnstile();
-
-     will keep the success message visible.
   ========================================================= */
 
   function resetTurnstile() {
-    /*
-     * Remove current token.
-     */
     setCaptchaToken('');
 
-    /*
-     * Reset status.
-     */
-    setCaptchaStatus('loading');
+    setCaptchaStatus('verifying');
 
-    /*
-     * Show refresh state.
-     */
     setIsRefreshingCaptcha(true);
-
-    /*
-     * IMPORTANT:
-     * Do NOT call setPopupMessage(null) here.
-     */
 
     if (window.turnstile && turnstileWidgetIdRef.current) {
       try {
         window.turnstile.reset(turnstileWidgetIdRef.current);
-
-        /*
-         * Give Turnstile a moment to reset.
-         */
-        window.setTimeout(() => {
-          setCaptchaStatus('ready');
-
-          setIsRefreshingCaptcha(false);
-        }, 250);
       } catch {
         setCaptchaStatus('error');
 
@@ -1138,11 +1026,15 @@ export default function ContactSection() {
                 <div
                   className={`captcha-check ${
                     captchaStatus === 'verified' ? 'captcha-check-success' : ''
-                  } ${captchaStatus === 'verifying' ? 'captcha-check-loading' : ''}`}
+                  } ${
+                    captchaStatus === 'verifying' || captchaStatus === 'loading'
+                      ? 'captcha-check-loading'
+                      : ''
+                  }`}
                 >
                   {captchaStatus === 'verified' ? (
                     <ShieldCheck size={22} />
-                  ) : captchaStatus === 'verifying' ? (
+                  ) : captchaStatus === 'verifying' || captchaStatus === 'loading' ? (
                     <RefreshCw size={20} className="captcha-spin" />
                   ) : (
                     <span />
@@ -1155,53 +1047,37 @@ export default function ContactSection() {
                   <strong>
                     {captchaStatus === 'verified'
                       ? 'Verification successful'
-                      : captchaStatus === 'verifying'
-                        ? 'Verifying...'
+                      : captchaStatus === 'verifying' || captchaStatus === 'loading'
+                        ? 'Verifying security...'
                         : captchaStatus === 'error'
                           ? 'Verification failed'
-                          : 'Verify you are human'}
+                          : 'Security verification'}
                   </strong>
 
                   <small>
                     {captchaStatus === 'verified'
                       ? 'You can now submit the form.'
-                      : captchaStatus === 'verifying'
-                        ? 'Cloudflare is checking your request.'
+                      : captchaStatus === 'verifying' || captchaStatus === 'loading'
+                        ? 'Checking security automatically...'
                         : captchaStatus === 'error'
                           ? 'Please try again.'
-                          : !isFormComplete
-                            ? 'Complete all fields above first.'
-                            : 'Click to complete the security check.'}
+                          : 'Checking security...'}
                   </small>
                 </div>
 
                 {/* =================================================
-                    I'M HUMAN BUTTON
+                    RETRY BUTTON (ONLY ON ERROR)
                 ================================================== */}
 
-                {captchaStatus !== 'verified' && (
+                {captchaStatus === 'error' && (
                   <button
                     type="button"
                     className="captcha-verify-button"
-                    onClick={startCaptchaVerification}
-                    disabled={
-                      !isFormComplete ||
-                      captchaStatus === 'loading' ||
-                      captchaStatus === 'verifying' ||
-                      isRefreshingCaptcha ||
-                      isSubmitting
-                    }
-                    title={
-                      !isFormComplete
-                        ? 'Complete all required fields first'
-                        : 'Verify you are human'
-                    }
+                    onClick={resetTurnstile}
+                    disabled={isRefreshingCaptcha || isSubmitting}
+                    title="Retry CAPTCHA verification"
                   >
-                    {captchaStatus === 'loading'
-                      ? 'Loading...'
-                      : captchaStatus === 'verifying'
-                        ? 'Checking...'
-                        : 'I’m human'}
+                    {isRefreshingCaptcha ? 'Retrying...' : 'Retry'}
                   </button>
                 )}
 

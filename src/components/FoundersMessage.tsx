@@ -70,7 +70,7 @@ export default function FoundersMessage() {
           <div className="founder-author">
             <div>
               <h3>Anoop Mathur</h3>
-              <span>Founder, CORE MEDIA</span>
+              {/* <span>Founder, CORE MEDIA</span> */}
             </div>
             <a
               href="https://www.linkedin.com/in/mathuranoop?utm_source=share_via&utm_content=profile&utm_medium=member_ios"
