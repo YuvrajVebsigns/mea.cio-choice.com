@@ -11,7 +11,6 @@ type DropdownName = 'about' | 'process' | 'yearBook';
 export default function Navbar() {
   const pathname = usePathname();
 
-  const [isHidden, setIsHidden] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -111,44 +110,8 @@ export default function Navbar() {
     };
   }, [mobileOpen]);
 
-  useEffect(() => {
-    function handleScroll() {
-      const currentScrollY = window.scrollY;
-
-      if (pathname === '/') {
-        // On home page: hide when at the hero section (top), show when scrolled
-        if (currentScrollY <= 60) {
-          setIsHidden(true);
-        } else {
-          setIsHidden(false);
-        }
-      } else {
-        // On inner pages: navbar is visible
-        setIsHidden(false);
-      }
-    }
-
-    handleScroll();
-
-    window.addEventListener('scroll', handleScroll, {
-      passive: true,
-    });
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [pathname]);
-
   return (
-    <header
-      className={[
-        'navbar',
-        isHidden && !mobileOpen ? 'navbar-hide' : '',
-        mobileOpen ? 'mobile-open' : '',
-      ]
-        .filter(Boolean)
-        .join(' ')}
-    >
+    <header className={['navbar', mobileOpen ? 'mobile-open' : ''].filter(Boolean).join(' ')}>
       <div className="navbar-container">
         <Link
           href="/"

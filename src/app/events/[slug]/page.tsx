@@ -509,7 +509,6 @@ import { useEffect, useState } from 'react';
 
 import ClientErrorBoundary from '@/components/ClientErrorBoundary';
 import EventDetailsAnimated from '@/components/EventDetailsAnimated';
-import EventSponsorsSection from '@/components/EventSponsorsSection';
 
 import {
   fetchWebsiteEventByIdOrSlug,
@@ -547,8 +546,61 @@ function getString(value: unknown, fallback = ''): string {
   return typeof value === 'string' ? value.trim() : fallback;
 }
 
+function formatEventDate(value: unknown): string {
+  const rawDate = getString(value);
+
+  if (!rawDate) {
+    return '';
+  }
+
+  const parsedDate = new Date(rawDate);
+
+  if (Number.isNaN(parsedDate.getTime())) {
+    return rawDate;
+  }
+
+  const dateFormatter = new Intl.DateTimeFormat('en-US', {
+    day: 'numeric',
+    month: 'long',
+    timeZone: 'UTC',
+    year: 'numeric',
+  });
+
+  const timeFormatter = new Intl.DateTimeFormat('en-US', {
+    hour: 'numeric',
+    minute: '2-digit',
+    timeZone: 'UTC',
+  });
+
+  return `${dateFormatter.format(parsedDate)} at ${timeFormatter.format(parsedDate)}`;
+}
+
 function getEventField(event: WebsiteEvent, key: string): unknown {
   return (event as unknown as Record<string, unknown>)[key];
+}
+
+function getEventSponsorSource(event: WebsiteEvent): unknown[] {
+  const candidateKeys = ['sponsors', 'sponsorsDetails', 'partners', 'partnersDetails'];
+
+  for (const key of candidateKeys) {
+    const value = getEventField(event, key);
+    if (Array.isArray(value)) {
+      return value;
+    }
+  }
+
+  const nestedData = isRecord(getEventField(event, 'data')) ? getEventField(event, 'data') : null;
+
+  if (nestedData) {
+    for (const key of candidateKeys) {
+      const value = getEventField(nestedData as WebsiteEvent, key);
+      if (Array.isArray(value)) {
+        return value;
+      }
+    }
+  }
+
+  return [];
 }
 
 /**
@@ -597,9 +649,9 @@ function normalizeExternalUrl(value: unknown): string {
  * API sponsors ko display-ready format mein convert karta hai.
  */
 function extractEventSponsors(event: WebsiteEvent): EventSponsor[] {
-  const rawSponsors = getEventField(event, 'sponsors');
+  const rawSponsors = getEventSponsorSource(event);
 
-  if (!Array.isArray(rawSponsors)) {
+  if (!Array.isArray(rawSponsors) || rawSponsors.length === 0) {
     return [];
   }
 
@@ -800,8 +852,16 @@ function extractTextFromContent(content: unknown): string {
           return item.trim();
         }
 
-        if (isRecord(item) && typeof item.body === 'string') {
-          return item.body.trim();
+        if (isRecord(item)) {
+          const itemData = isRecord(item.data) ? item.data : null;
+
+          return (
+            getString(itemData?.text) ||
+            getString(itemData?.content) ||
+            getString(item.text) ||
+            getString(item.body) ||
+            getString(item.content)
+          );
         }
 
         return '';
@@ -838,6 +898,32 @@ function extractTextFromContent(content: unknown): string {
   }
 
   return getString(content.summary) || getString(content.description);
+}
+
+function getContentBlocks(content: unknown): unknown[] {
+  if (Array.isArray(content)) {
+    return content;
+  }
+
+  if (!isRecord(content)) {
+    return [];
+  }
+
+  for (const key of ['blocks', 'contentBlocks', 'items']) {
+    if (Array.isArray(content[key])) {
+      return content[key];
+    }
+  }
+
+  for (const key of ['content', 'body', 'description']) {
+    const nestedBlocks = getContentBlocks(content[key]);
+
+    if (nestedBlocks.length > 0) {
+      return nestedBlocks;
+    }
+  }
+
+  return [];
 }
 
 function openExternal(url: string) {
@@ -1029,6 +1115,17 @@ export default function EventDetailsPage() {
 
   const normalizedSections: EventSection[] = [];
 
+  const eventDescriptionText = extractTextFromContent(
+    [
+      getEventField(event, 'description'),
+      getEventField(event, 'content'),
+      getEventField(event, 'summary'),
+      getEventField(event, 'overview'),
+      getEventField(event, 'details'),
+      getEventField(event, 'body'),
+    ].find((candidate) => extractTextFromContent(candidate)) ?? '',
+  ).trim();
+
   const eventSections = getEventField(event, 'sections');
 
   if (Array.isArray(eventSections)) {
@@ -1044,12 +1141,20 @@ export default function EventDetailsPage() {
           ? section.body
           : extractTextFromContent(section.body ?? section.content ?? '');
 
-      if (body) {
-        normalizedSections.push({
-          heading,
-          body,
-        });
+      if (!body) {
+        return;
       }
+
+      const normalizedBody = body.trim();
+
+      if (eventDescriptionText && normalizedBody === eventDescriptionText) {
+        return;
+      }
+
+      normalizedSections.push({
+        heading,
+        body: normalizedBody,
+      });
     });
   }
 
@@ -1061,11 +1166,17 @@ export default function EventDetailsPage() {
     getImageUrl(getEventField(event, 'banner')) ||
     FALLBACK_EVENT_IMAGE;
 
+  const descriptionCandidates = [
+    getEventField(event, 'description'),
+    getEventField(event, 'content'),
+    getEventField(event, 'summary'),
+    getEventField(event, 'overview'),
+    getEventField(event, 'details'),
+    getEventField(event, 'body'),
+  ];
+
   const eventDescription =
-    getEventField(event, 'description') ??
-    getEventField(event, 'content') ??
-    getEventField(event, 'summary') ??
-    '';
+    descriptionCandidates.find((candidate) => extractTextFromContent(candidate)) ?? '';
 
   const featuredEvent = {
     title: String(
@@ -1079,7 +1190,7 @@ export default function EventDetailsPage() {
       getEventField(event, 'organizer') ?? getEventField(event, 'author') ?? 'CORE Media',
     ),
 
-    date: String(
+    date: formatEventDate(
       getEventField(event, 'startDate') ??
         getEventField(event, 'startsAt') ??
         getEventField(event, 'date') ??
@@ -1095,21 +1206,41 @@ export default function EventDetailsPage() {
     sections: normalizedSections,
   };
 
-  const contentSource = getEventField(event, 'description') ?? getEventField(event, 'content');
+  const contentSource = descriptionCandidates.find(
+    (candidate) => getContentBlocks(candidate).length > 0,
+  );
 
-  const contentBlocks =
-    isRecord(contentSource) && Array.isArray(contentSource.blocks) ? contentSource.blocks : [];
+  const contentBlocks = getContentBlocks(contentSource).filter((block) => {
+    if (!isRecord(block)) {
+      return true;
+    }
+
+    const blockData = isRecord(block.data) ? block.data : {};
+    const blockText =
+      getString(blockData.text) ||
+      getString(block.text) ||
+      getString(blockData.body) ||
+      getString(blockData.content) ||
+      getString(block.body) ||
+      getString(block.content);
+
+    return !(eventDescriptionText && blockText.trim() === eventDescriptionText);
+  });
 
   function renderBlock(block: unknown, index: number) {
+    if (typeof block === 'string') {
+      return <p key={`text-${index}`} dangerouslySetInnerHTML={{ __html: block }} />;
+    }
+
     if (!isRecord(block)) {
       return null;
     }
 
     const key = getString(block.id) || `${String(block.type ?? 'block')}-${index}`;
 
-    const type = getString(block.type).toLowerCase();
+    const type = getString(block.type ?? block.kind).toLowerCase();
 
-    const data = isRecord(block.data) ? block.data : null;
+    const data = isRecord(block.data) ? block.data : block;
 
     if (type === 'header') {
       const level = typeof data?.level === 'number' ? data.level : 2;
@@ -1209,7 +1340,7 @@ export default function EventDetailsPage() {
       return <hr key={key} style={{ margin: '24px 0' }} />;
     }
 
-    const fallbackText = getString(data?.text);
+    const fallbackText = getString(data?.text) || getString(data?.body) || getString(data?.content);
 
     if (!fallbackText) {
       return null;
@@ -1235,20 +1366,7 @@ export default function EventDetailsPage() {
         <ClientErrorBoundary>
           <EventDetailsAnimated featuredEvent={featuredEvent} readableSlug={readableSlug} />
 
-          {/* Sponsors condition */}
-          {sponsors.length === 0 ? (
-            /*
-             * API sponsors empty hain:
-             * existing static section show hoga.
-             */
-            <EventSponsorsSection />
-          ) : (
-            /*
-             * API sponsors available hain:
-             * dynamic section show hoga.
-             */
-            <DynamicEventSponsorsSection sponsors={sponsors} />
-          )}
+          {sponsors.length > 0 ? <DynamicEventSponsorsSection sponsors={sponsors} /> : null}
 
           {contentBlocks.length > 0 ? (
             <section className="event-description-content">

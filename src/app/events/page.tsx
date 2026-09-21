@@ -246,6 +246,7 @@ function getSafeImageSrc(item: WebsiteEvent): string {
 export default function EventsPage() {
   const [events, setEvents] = useState<WebsiteEvent[] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [eventFilter, setEventFilter] = useState<'all' | 'online' | 'offline'>('all');
 
   useEffect(() => {
     let isMounted = true;
@@ -267,6 +268,25 @@ export default function EventsPage() {
       isMounted = false;
     };
   }, []);
+
+  const filteredEvents =
+    events?.filter((event) => {
+      if (eventFilter === 'all') return true;
+
+      const rawMode = [
+        event.mode,
+        event.eventType,
+        event.type,
+        event.format,
+        event.isOnline === true ? 'online' : event.isOnline === false ? 'offline' : '',
+        event.online === true ? 'online' : event.online === false ? 'offline' : '',
+      ]
+        .find((value) => value !== undefined && value !== null && value !== '')
+        ?.toString()
+        .toLowerCase();
+
+      return rawMode?.includes(eventFilter) ?? false;
+    }) ?? [];
 
   const heroMediaRef = useScrollAnimation<HTMLDivElement>({
     animationClass: 'animate-fade-in-right',
@@ -329,13 +349,29 @@ export default function EventsPage() {
 
       <section className="project-section">
         <div className="project-container">
+          <div className="event-filters" role="group" aria-label="Filter events">
+            {(['all', 'online', 'offline'] as const).map((filter) => (
+              <button
+                key={filter}
+                type="button"
+                className={`event-filter-button ${eventFilter === filter ? 'active' : ''}`}
+                onClick={() => setEventFilter(filter)}
+                aria-pressed={eventFilter === filter}
+              >
+                {filter === 'all' ? 'All' : filter === 'online' ? 'Online' : 'Offline'}
+              </button>
+            ))}
+          </div>
+
           {isLoading ? (
             <div className="events-loading" style={{ padding: '60px 20px', textAlign: 'center' }}>
               Loading events…
             </div>
-          ) : events && events.length > 0 ? (
-            <div className="project-grid">
-              {events.map((item: WebsiteEvent, index: number) => {
+          ) : filteredEvents.length > 0 ? (
+            <div
+              className={`project-grid ${filteredEvents.length === 1 ? 'project-grid-single' : ''}`}
+            >
+              {filteredEvents.map((item: WebsiteEvent, index: number) => {
                 const title = String(item.title ?? item.name ?? item.eventName ?? 'Event');
                 const slug =
                   item.slug ||
@@ -382,7 +418,7 @@ export default function EventsPage() {
             </div>
           ) : (
             <div className="events-empty" style={{ padding: '60px 20px', textAlign: 'center' }}>
-              No events available at the moment.
+              No {eventFilter === 'all' ? '' : `${eventFilter} `}events available at the moment.
             </div>
           )}
         </div>

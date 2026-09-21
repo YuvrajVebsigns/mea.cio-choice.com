@@ -72,6 +72,18 @@ export default function Footer() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
+  const handleContactClick = (event: React.MouseEvent<HTMLAnchorElement>, contact: ContactItem) => {
+    if (contact.type !== 'email') {
+      return;
+    }
+
+    const emailAddress = (contact.label || contact.href.replace(/^mailto:/i, '')).trim();
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(emailAddress)}`;
+
+    event.preventDefault();
+    window.open(gmailUrl, '_blank', 'noopener,noreferrer');
+  };
+
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -195,7 +207,14 @@ export default function Footer() {
           {/* Contacts */}
           <div className="footer-contact">
             {data.contacts.map((contact, index) => (
-              <a key={index} href={contact.href} className="footer-contact-item">
+              <a
+                key={index}
+                href={contact.href}
+                className="footer-contact-item"
+                target={contact.type === 'email' ? '_blank' : undefined}
+                rel={contact.type === 'email' ? 'noopener noreferrer' : undefined}
+                onClick={(event) => handleContactClick(event, contact)}
+              >
                 {CONTACT_ICONS[contact.type] || null}
                 <span>{contact.label}</span>
               </a>

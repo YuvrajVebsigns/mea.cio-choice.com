@@ -170,10 +170,8 @@ export default function RecognizedBrands() {
             <div className="brands-grid">
               {brands.map((brand) => (
                 <div className="brand-card" key={brand.id}>
-                  <BrandLogo name={brand.name} logo={brand.logo} />
-
                   <h3>{brand.name}</h3>
-
+                  <BrandLogo name={brand.name} logo={brand.logo} />
                   <div className="category">
                     <small>Category</small>
 

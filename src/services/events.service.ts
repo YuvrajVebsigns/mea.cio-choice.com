@@ -15,7 +15,7 @@ export type WebsiteEvent = {
   title?: string;
   name?: string;
   eventName?: string;
-  description?: string;
+  description?: unknown;
   startsAt?: string;
   startDate?: string;
   image?: string;
@@ -85,7 +85,7 @@ function normalizeEvent(data: RawEvent, fallbackId = ''): WebsiteEvent {
           : typeof data.eventName === 'string'
             ? data.eventName
             : undefined,
-    description: typeof data.description === 'string' ? data.description : undefined,
+    description: data.description,
     startsAt:
       typeof data.startsAt === 'string'
         ? data.startsAt

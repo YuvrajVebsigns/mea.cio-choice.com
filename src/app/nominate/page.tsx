@@ -416,8 +416,15 @@ export default function NominatePage() {
    * SUBMIT NOMINATION
    * =========================================================
    */
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+    const submittedNominatorName = String(formData.get('nominatorName') ?? '').trim();
+    const submittedNominatorCompany = String(formData.get('nominatorCompany') ?? '').trim();
+    const submittedNominatorCity = String(formData.get('nominatorCity') ?? '').trim();
+    const submittedNominatorContact = String(formData.get('nominatorContact') ?? '').trim();
+    const submittedNominatorEmail = String(formData.get('nominatorEmail') ?? '').trim();
 
     /*
      * Extra protection:
@@ -440,33 +447,33 @@ export default function NominatePage() {
      * NOMINATOR VALIDATION
      * =======================================================
      */
-    if (!nominatorName.trim()) {
+    if (!submittedNominatorName) {
       nextErrors.nominatorName = 'Nominator name is required.';
       hasErrors = true;
-    } else if (!nameRegex.test(nominatorName)) {
+    } else if (!nameRegex.test(submittedNominatorName)) {
       nextErrors.nominatorName = 'Only alphabets are allowed.';
       hasErrors = true;
     }
 
-    if (!nominatorCompany.trim()) {
+    if (!submittedNominatorCompany) {
       nextErrors.nominatorCompany = 'Company name is required.';
       hasErrors = true;
     }
 
-    if (!nominatorCity.trim()) {
+    if (!submittedNominatorCity) {
       nextErrors.nominatorCity = 'City is required.';
       hasErrors = true;
     }
 
-    if (!nominatorEmail.trim()) {
+    if (!submittedNominatorEmail) {
       nextErrors.nominatorEmail = 'Email is required.';
       hasErrors = true;
-    } else if (!emailRegex.test(nominatorEmail)) {
+    } else if (!emailRegex.test(submittedNominatorEmail)) {
       nextErrors.nominatorEmail = 'Enter a valid email.';
       hasErrors = true;
     }
 
-    if (nominatorContact && !phoneRegex.test(nominatorContact)) {
+    if (submittedNominatorContact && !phoneRegex.test(submittedNominatorContact)) {
       nextErrors.nominatorContact = 'Enter a valid 10-digit phone number.';
       hasErrors = true;
     }
@@ -559,11 +566,11 @@ export default function NominatePage() {
 
     try {
       const response = await submitWebsiteNomination({
-        nominatorName,
-        nominatorCompany,
-        nominatorCity,
-        nominatorContact,
-        nominatorEmail,
+        nominatorName: submittedNominatorName,
+        nominatorCompany: submittedNominatorCompany,
+        nominatorCity: submittedNominatorCity,
+        nominatorContact: submittedNominatorContact,
+        nominatorEmail: submittedNominatorEmail,
 
         nominees: cios.map((cio) => ({
           categoryId: cio.categoryId,
@@ -644,16 +651,16 @@ export default function NominatePage() {
     return (
       <main className="nominate-page-container">
         <section className="nominate-success-section">
-          <h1>CIO CHOICE 2026 — Nomination Received</h1>
+          <h1>Thank you for your Nominations for CIO CHOICE 2027.</h1>
 
-          <p>
+          {/* <p>
             Thank you. Your nomination has been recorded. You will receive a confirmation email
             shortly and the nominated CIO(s) will be notified as described.
-          </p>
+          </p> */}
 
-          <p>
-            <Link href="/">Return to home</Link>
-          </p>
+          <Link href="/" className="nominate-btn nominate-btn-primary nominate-return-link">
+            Return to home
+          </Link>
         </section>
       </main>
     );
@@ -823,6 +830,7 @@ export default function NominatePage() {
                   <label className="nominate-label">
                     CIO&apos;s Name *
                     <input
+                      name="nominatorName"
                       value={nominatorName}
                       onChange={(e) => {
                         setNominatorName(e.target.value.replace(/[^A-Za-z\s]/g, ''));
@@ -845,6 +853,7 @@ export default function NominatePage() {
                   <label className="nominate-label">
                     CIO&apos;s Company Name *
                     <input
+                      name="nominatorCompany"
                       value={nominatorCompany}
                       onChange={(e) => {
                         setNominatorCompany(e.target.value);
@@ -866,6 +875,7 @@ export default function NominatePage() {
                   <label className="nominate-label">
                     CIO&apos;s City *
                     <input
+                      name="nominatorCity"
                       value={nominatorCity}
                       onChange={(e) => {
                         setNominatorCity(e.target.value);
@@ -889,6 +899,7 @@ export default function NominatePage() {
                     CIO&apos;s Contact Number
                     <input
                       type="tel"
+                      name="nominatorContact"
                       value={nominatorContact}
                       onChange={(e) => {
                         setNominatorContact(e.target.value.replace(/[^0-9]/g, ''));
@@ -913,6 +924,7 @@ export default function NominatePage() {
                     CIO&apos;s Email ID *
                     <input
                       type="email"
+                      name="nominatorEmail"
                       value={nominatorEmail}
                       onChange={(e) => {
                         setNominatorEmail(e.target.value);
@@ -1183,7 +1195,7 @@ export default function NominatePage() {
           </button>
 
           <small className="nominate-submit-note">
-            By submitting you agree that nominated CIOs will be contacted. All nominations are
+            By submitting you agree that nominated Partners will be contacted. All nominations are
             confidential.
           </small>
         </div>

@@ -445,14 +445,12 @@ export default function ContactSection() {
     message.trim().length > 0;
 
   /* =========================================================
-     LOAD CLOUDFLARE TURNSTILE (AUTO-VERIFY)
+     LOAD CLOUDFLARE TURNSTILE (MANUAL VERIFY)
   ========================================================= */
 
   useEffect(() => {
     if (!turnstileSiteKey) {
       setCaptchaStatus('error');
-
-      setPopupMessage('CAPTCHA configuration is missing. Please try again later.');
 
       return;
     }
@@ -466,8 +464,6 @@ export default function ContactSection() {
 
       if (!window.turnstile) {
         setCaptchaStatus('error');
-
-        setPopupMessage('Unable to load CAPTCHA verification. Please try again later.');
 
         return;
       }
@@ -486,7 +482,7 @@ export default function ContactSection() {
       }
 
       try {
-        setCaptchaStatus('verifying');
+        setCaptchaStatus('ready');
 
         const widgetId = window.turnstile.render(turnstileContainerRef.current, {
           /*
@@ -499,10 +495,8 @@ export default function ContactSection() {
            */
           size: 'invisible',
 
-          /*
-           * Automatic verification on render.
-           */
-          execution: 'render',
+          /* Verification starts only when the user clicks Verify. */
+          execution: 'execute',
 
           theme: 'light',
 
@@ -526,23 +520,21 @@ export default function ContactSection() {
             setPopupMessage(null);
           },
 
-          /*
-           * Token expired - auto refresh.
-           */
+          /* Token expired - wait for the user to click Verify again. */
           'expired-callback': () => {
             if (cancelled) {
               return;
             }
 
             setCaptchaToken('');
-
-            resetTurnstile();
+            setCaptchaStatus('error');
+            setIsRefreshingCaptcha(false);
           },
 
           /*
            * Turnstile error.
            */
-          'error-callback': (errorCode) => {
+          'error-callback': (_errorCode) => {
             if (cancelled) {
               return;
             }
@@ -552,27 +544,17 @@ export default function ContactSection() {
             setCaptchaStatus('error');
 
             setIsRefreshingCaptcha(false);
-
-            if (errorCode === '110200') {
-              setPopupMessage(
-                'CAPTCHA domain is not authorized in Cloudflare. Please add this website hostname to Turnstile Hostname Management.',
-              );
-            } else {
-              setPopupMessage('CAPTCHA verification failed. Please try again.');
-            }
           },
 
-          /*
-           * Verification timeout - auto refresh.
-           */
+          /* Verification timeout - wait for an explicit retry. */
           'timeout-callback': () => {
             if (cancelled) {
               return;
             }
 
             setCaptchaToken('');
-
-            resetTurnstile();
+            setCaptchaStatus('error');
+            setIsRefreshingCaptcha(false);
           },
         });
 
@@ -589,8 +571,6 @@ export default function ContactSection() {
         turnstileWidgetIdRef.current = widgetId;
       } catch {
         setCaptchaStatus('error');
-
-        setPopupMessage('Unable to load CAPTCHA. Please try again later.');
       }
     };
 
@@ -634,8 +614,6 @@ export default function ContactSection() {
       }
 
       setCaptchaStatus('error');
-
-      setPopupMessage('Unable to connect to CAPTCHA service. Please try again later.');
     });
 
     document.head.appendChild(script);
@@ -676,7 +654,7 @@ export default function ContactSection() {
 
     const timer = window.setTimeout(() => {
       setPopupMessage(null);
-    }, 5000);
+    }, 3000);
 
     return () => {
       window.clearTimeout(timer);
@@ -684,32 +662,43 @@ export default function ContactSection() {
   }, [popupMessage]);
 
   /* =========================================================
-     REFRESH / RESET TURNSTILE
+     MANUAL TURNSTILE VERIFICATION
   ========================================================= */
 
   function resetTurnstile() {
     setCaptchaToken('');
 
-    setCaptchaStatus('verifying');
+    if (window.turnstile && turnstileWidgetIdRef.current) {
+      try {
+        window.turnstile.reset(turnstileWidgetIdRef.current);
+        setCaptchaStatus('ready');
+        setIsRefreshingCaptcha(false);
+      } catch {
+        setCaptchaStatus('error');
+        setIsRefreshingCaptcha(false);
+      }
+    } else {
+      setCaptchaStatus('error');
+      setIsRefreshingCaptcha(false);
+    }
+  }
 
+  function verifyTurnstile() {
+    setCaptchaToken('');
+    setCaptchaStatus('verifying');
     setIsRefreshingCaptcha(true);
 
     if (window.turnstile && turnstileWidgetIdRef.current) {
       try {
         window.turnstile.reset(turnstileWidgetIdRef.current);
+        window.turnstile.execute(turnstileWidgetIdRef.current);
       } catch {
         setCaptchaStatus('error');
-
         setIsRefreshingCaptcha(false);
-
-        setPopupMessage('Unable to refresh CAPTCHA. Please try again.');
       }
     } else {
       setCaptchaStatus('error');
-
       setIsRefreshingCaptcha(false);
-
-      setPopupMessage('CAPTCHA is not available. Please refresh the page.');
     }
   }
 
@@ -769,7 +758,11 @@ export default function ContactSection() {
     ======================================================= */
 
     if (!captchaToken) {
-      setPopupMessage('Please complete the CAPTCHA verification.');
+      setPopupMessage(
+        captchaStatus === 'error'
+          ? 'CAPTCHA verification failed.'
+          : 'Please complete the CAPTCHA verification.',
+      );
 
       return;
     }
@@ -819,8 +812,9 @@ export default function ContactSection() {
       /* =====================================================
          RESET CAPTCHA
 
-         resetTurnstile() intentionally does not clear
-         popupMessage, so the success message remains.
+         resetTurnstile() clears the token without
+         automatically starting another verification.
+        popupMessage, so the success message remains.
       ===================================================== */
 
       resetTurnstile();
@@ -1046,56 +1040,42 @@ export default function ContactSection() {
                 <div className="captcha-content">
                   <strong>
                     {captchaStatus === 'verified'
-                      ? 'Verification successful'
+                      ? 'CAPTCHA successful'
                       : captchaStatus === 'verifying' || captchaStatus === 'loading'
-                        ? 'Verifying security...'
+                        ? 'CAPTCHA security...'
                         : captchaStatus === 'error'
-                          ? 'Verification failed'
-                          : 'Security verification'}
+                          ? 'CAPTCHA failed'
+                          : 'CAPTCHA verification'}
                   </strong>
 
                   <small>
                     {captchaStatus === 'verified'
                       ? 'You can now submit the form.'
                       : captchaStatus === 'verifying' || captchaStatus === 'loading'
-                        ? 'Checking security automatically...'
+                        ? 'Checking security...'
                         : captchaStatus === 'error'
                           ? 'Please try again.'
-                          : 'Checking security...'}
+                          : 'Click Verify to continue.'}
                   </small>
                 </div>
 
                 {/* =================================================
-                    RETRY BUTTON (ONLY ON ERROR)
+                    VERIFY BUTTON (MANUAL ONLY)
                 ================================================== */}
 
-                {captchaStatus === 'error' && (
+                {captchaStatus !== 'verified' && captchaStatus !== 'loading' && (
                   <button
                     type="button"
                     className="captcha-verify-button"
-                    onClick={resetTurnstile}
+                    onClick={verifyTurnstile}
                     disabled={isRefreshingCaptcha || isSubmitting}
-                    title="Retry CAPTCHA verification"
+                    title="Verify CAPTCHA"
                   >
-                    {isRefreshingCaptcha ? 'Retrying...' : 'Retry'}
+                    {isRefreshingCaptcha ? 'Verifying...' : 'Verify'}
                   </button>
                 )}
 
-                {/* =================================================
-                    REFRESH BUTTON
-                ================================================== */}
-
-                {captchaStatus === 'verified' && (
-                  <button
-                    type="button"
-                    className="captcha-refresh-icon-button"
-                    onClick={resetTurnstile}
-                    disabled={isRefreshingCaptcha || isSubmitting}
-                    aria-label="Refresh CAPTCHA"
-                  >
-                    <RefreshCw size={18} className={isRefreshingCaptcha ? 'captcha-spin' : ''} />
-                  </button>
-                )}
+                {/* A verified token must remain unchanged until submission. */}
               </div>
 
               {/* =================================================

@@ -8,6 +8,7 @@ import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import BlogCommentsPanel from '@/components/BlogCommentsPanel';
 import {
   fetchWebsiteBlogs,
+  normalizeMediaUrl,
   submitWebsiteBlogLike,
   type WebsiteBlogItem,
 } from '@/services/blogs.service';
@@ -17,7 +18,11 @@ function getBlogCategory(blog: WebsiteBlogItem) {
 }
 
 function getBlogImage(blog: WebsiteBlogItem) {
-  return blog.featureImage || blog.seo?.ogImage || '/assets/blogs/blog-1.png';
+  return (
+    normalizeMediaUrl(blog.featureImage) ||
+    normalizeMediaUrl(blog.seo?.ogImage) ||
+    '/assets/blogs/blog-1.png'
+  );
 }
 
 export default function BlogsSection() {

@@ -9,10 +9,10 @@ export default function EnterPage() {
     <main className="enter-page">
       <section className="enter-section">
         <div className="enter-hero">
-          <p className="enter-label">Enter CIO Choice 2026</p>
+          <p className="enter-label">Enter CIO Choice 2027</p>
 
-          <h1>
-            CIO Choice 2026 welcomes you to participate in the largest CIO survey on product,
+          <h1 className="enter-hero-title">
+            CIO Choice 2027 welcomes you to participate in the largest CIO survey on product,
             service and/or solution recognition where winners are picked by CIOs.
           </h1>
 
@@ -82,7 +82,14 @@ export default function EnterPage() {
           <div className="enter-card-content">
             <p>
               Send the completed entry form to{' '}
-              <a href="mailto:contact@cxo-capital.com">contact@cxo-capital.com</a>.
+              <a
+                href="https://mail.google.com/mail/?view=cm&fs=1&to=contact@cxo-capital.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                contact@cxo-capital.com
+              </a>
+              .
             </p>
 
             <p>
@@ -124,10 +131,10 @@ export default function EnterPage() {
 
           <div className="enter-card-content">
             <ul>
-              <li>Entry – US$ 1,000 + Local Taxes for Yr. 2026</li>
+              <li>Entry – US$ 1,000 + Local Taxes for Yr. 2027</li>
 
               <li>
-                If Recognised – CIO CHOICE of the Year – US$ 10,000 + Local Taxes for Yr. 2026
+                If Recognised – CIO CHOICE of the Year – US$ 10,000 + Local Taxes for Yr. 2027
                 (License Fees)
               </li>
             </ul>
@@ -146,19 +153,22 @@ export default function EnterPage() {
 
           <div className="enter-card-content">
             <p>
-              <a
-                href="https://www.cio-choice.in/wp-content/uploads/2025/07/CIO-CHOICE-Entry-Form-2026.docx"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                CLICK HERE
-              </a>{' '}
+              <p>
+                <a href="/research">CLICK HERE</a>
+              </p>
               to download the Entry Form.
             </p>
 
             <p>
               For the complete Terms &amp; Conditions, contact{' '}
-              <a href="mailto:contact@cxo-capital.com">contact@cxo-capital.com</a>.
+              <a
+                href="https://mail.google.com/mail/?view=cm&fs=1&to=contact@cxo-capital.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                contact@cxo-capital.com
+              </a>
+              .
             </p>
           </div>
         </details>
@@ -179,7 +189,13 @@ export default function EnterPage() {
 
             <p>
               <strong>Email:</strong>{' '}
-              <a href="mailto:contact@cxo-capital.com">contact@cxo-capital.com</a>
+              <a
+                href="https://mail.google.com/mail/?view=cm&fs=1&to=contact@cxo-capital.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                contact@cxo-capital.com
+              </a>
             </p>
           </div>
         </details>

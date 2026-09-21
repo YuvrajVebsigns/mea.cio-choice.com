@@ -5,17 +5,12 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'beracore-media-bucket-test.idr01.zata.ai',
+        hostname: '**',
         pathname: '/**',
       },
       {
-        protocol: 'https',
-        hostname: 'coremediagroup.sgp1.digitaloceanspaces.com',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'cxo-capital.com',
+        protocol: 'http',
+        hostname: '**',
         pathname: '/**',
       },
     ],

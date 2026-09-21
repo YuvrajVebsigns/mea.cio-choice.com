@@ -114,6 +114,51 @@ export interface WebsiteBlogCommentsResponse {
   data: WebsiteBlogComment[];
 }
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null;
+}
+
+export function normalizeMediaUrl(value: unknown): string {
+  if (typeof value === 'string') {
+    const trimmed = value.trim();
+    return trimmed;
+  }
+
+  if (!isRecord(value)) {
+    return '';
+  }
+
+  const candidates = [
+    value.url,
+    value.src,
+    value.imageUrl,
+    value.fileUrl,
+    value.original,
+    value.large,
+    value.medium,
+    value.small,
+    value.thumbnail,
+    value.path,
+    value.secure_url,
+  ];
+
+  for (const candidate of candidates) {
+    const normalized = normalizeMediaUrl(candidate);
+    if (normalized) {
+      return normalized;
+    }
+  }
+
+  for (const nestedKey of ['data', 'file', 'media', 'image', 'cover', 'featuredImage']) {
+    const nested = normalizeMediaUrl(value[nestedKey]);
+    if (nested) {
+      return nested;
+    }
+  }
+
+  return '';
+}
+
 function extractCommentItems(response: unknown): WebsiteBlogComment[] {
   const tryArray = (value: unknown): WebsiteBlogComment[] | null =>
     Array.isArray(value) ? (value as WebsiteBlogComment[]) : null;

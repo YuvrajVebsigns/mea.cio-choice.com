@@ -1,5 +1,7 @@
 'use client';
 
+import Link from 'next/link';
+import { ArrowUpLeft } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import type { Country } from 'react-phone-number-input';
 import CountryCodeSelect, { getDialCodeFromCountry } from '@/components/CountryCodeSelect';
@@ -33,16 +35,6 @@ export default function RegisterPage() {
       .then((data: WebsiteEvent[]) => setEvents(data))
       .catch(() => setEvents([]));
   }, []);
-
-  useEffect(() => {
-    if (!popupMessage) return;
-
-    const timer = window.setTimeout(() => {
-      setPopupMessage(null);
-    }, 3200);
-
-    return () => window.clearTimeout(timer);
-  }, [popupMessage]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -313,6 +305,13 @@ export default function RegisterPage() {
               >
                 {loading ? 'Submitting...' : 'Submit Registration'}
               </button>
+
+              <Link href="/events" className="backbutton registration-back-link">
+                <span className="backbutton-icon">
+                  <ArrowUpLeft size={18} />
+                </span>
+                <span>Back to Events</span>
+              </Link>
             </div>
           </form>
         </div>
