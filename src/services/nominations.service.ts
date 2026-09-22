@@ -44,6 +44,12 @@ function buildSubmitNominationBody(input: NominationSubmissionInput): SubmitNomi
     nominatorCompany: input.nominatorCompany.trim(),
     nominatorCity: input.nominatorCity.trim(),
     nominatorEmail: input.nominatorEmail.trim(),
+    ...(input.nominatorCountryCode?.trim()
+      ? {
+          nominatorCountryCode: input.nominatorCountryCode.trim(),
+          countryCode: input.nominatorCountryCode.trim(),
+        }
+      : {}),
 
     nominees: input.nominees.map((nominee) => ({
       categoryId: nominee.categoryId.trim(),
@@ -59,6 +65,12 @@ function buildSubmitNominationBody(input: NominationSubmissionInput): SubmitNomi
       ...(nominee.mobileNo?.trim()
         ? {
             mobileNo: nominee.mobileNo.trim(),
+          }
+        : {}),
+      ...(nominee.countryCode?.trim()
+        ? {
+            countryCode: nominee.countryCode.trim(),
+            mobileCountryCode: nominee.countryCode.trim(),
           }
         : {}),
     })),

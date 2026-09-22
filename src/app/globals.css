@@ -9175,8 +9175,24 @@ main.advisory-page {
   min-width: 0;
 }
 
+.nominate-phone-row {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px 24px;
+  min-width: 0;
+}
+
+.nominate-phone-row .nominate-label {
+  min-width: 0;
+}
+
 @media (max-width: 768px) {
   .nominate-category-row {
+    grid-template-columns: 1fr;
+  }
+
+  .nominate-phone-row {
     grid-template-columns: 1fr;
   }
 }
