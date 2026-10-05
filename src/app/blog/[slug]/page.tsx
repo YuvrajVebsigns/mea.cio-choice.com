@@ -55,10 +55,6 @@ function getBlogImage(blog?: WebsiteBlogDetailItem | null) {
   );
 }
 
-function getBlogCategory(blog?: WebsiteBlogDetailItem | null) {
-  return blog?.websites?.[0]?.name || blog?.tags?.[0] || 'Blog';
-}
-
 function getBlogContentBlocks(blog?: WebsiteBlogDetailItem | null) {
   return Array.isArray(blog?.content?.blocks) ? blog.content.blocks : [];
 }
@@ -235,7 +231,6 @@ export default function BlogDetailsPage() {
   }
 
   const displayTitle = blog.title;
-  const displayCategory = getBlogCategory(blog);
   const displayDate = formatPublishedDate(blog.publishedAt);
   const displayImage = getBlogImage(blog);
   const contentBlocks = getBlogContentBlocks(blog);
@@ -307,10 +302,6 @@ export default function BlogDetailsPage() {
             animationClass="animate-fade-in-left"
             initialTransform="translateX(-24px)"
           >
-            <div className="blogpage-meta">
-              <span className="blogpage-category">{displayCategory}</span>
-            </div>
-
             <h1 className="blogpage-title">{displayTitle}</h1>
 
             {displayDate ? (

@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import { ArrowUpRight, ChevronDown, Menu, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 
-type DropdownName = 'about' | 'process' | 'yearBook';
+type DropdownName = 'about' | 'advisory' | 'process' | 'yearBook';
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -15,6 +15,7 @@ export default function Navbar() {
   const [isMobile, setIsMobile] = useState(false);
 
   const [aboutOpen, setAboutOpen] = useState(false);
+  const [advisoryOpen, setAdvisoryOpen] = useState(false);
   const [processOpen, setProcessOpen] = useState(false);
   const [yearBookOpen, setYearBookOpen] = useState(false);
 
@@ -22,6 +23,7 @@ export default function Navbar() {
 
   function closeAllDropdowns() {
     setAboutOpen(false);
+    setAdvisoryOpen(false);
     setProcessOpen(false);
     setYearBookOpen(false);
   }
@@ -32,12 +34,20 @@ export default function Navbar() {
     }
 
     setAboutOpen(name === 'about');
+    setAdvisoryOpen(name === 'advisory');
     setProcessOpen(name === 'process');
     setYearBookOpen(name === 'yearBook');
   }
 
   function toggleDropdown(name: DropdownName) {
-    const isOpen = name === 'about' ? aboutOpen : name === 'process' ? processOpen : yearBookOpen;
+    const isOpen =
+      name === 'about'
+        ? aboutOpen
+        : name === 'advisory'
+          ? advisoryOpen
+          : name === 'process'
+            ? processOpen
+            : yearBookOpen;
 
     closeAllDropdowns();
 
@@ -192,13 +202,40 @@ export default function Navbar() {
               </ul>
             </div>
           </div>
-          <Link
-            href="/advisory-panel"
-            className={`nav-link ${pathname === '/advisory-panel' ? 'active' : ''}`}
-            onClick={closeMobileMenu}
+          <div
+            className={`nav-dropdown advisory-dropdown ${advisoryOpen ? 'open' : ''}`}
+            onMouseEnter={() => {
+              if (!isMobile) openDropdown('advisory');
+            }}
+            onMouseLeave={() => {
+              if (!isMobile) scheduleDropdownClose();
+            }}
           >
-            Advisory Panel
-          </Link>
+            <button
+              type="button"
+              className={`nav-link ${pathname.startsWith('/advisory-panel') ? 'active' : ''}`}
+              onClick={() => handleDropdownClick('advisory')}
+              aria-expanded={advisoryOpen}
+            >
+              <span>Advisory Panel</span>
+              <ChevronDown size={16} />
+            </button>
+
+            <div className="mega-panel">
+              <ul>
+                <li>
+                  <Link href="/advisory-panel/2027" className="mega-item" onClick={closeMobileMenu}>
+                    Advisory 2027
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/advisory-panel/2026" className="mega-item" onClick={closeMobileMenu}>
+                    Advisory 2026
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </div>
           <div
             className={`nav-dropdown ${processOpen ? 'open' : ''}`}
             onMouseEnter={() => {
