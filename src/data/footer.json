@@ -4,8 +4,7 @@
     "alt": "CIO Choice",
     "width": 180,
     "height": 70,
-    "href": "/",
-    "description": "CIO Choice recognizes technology excellence and connects visionary CIOs, technology leaders, and recognized brands across the Middle East & Africa."
+    "href": "/"
   },
   "columns": [
     {
@@ -20,10 +19,7 @@
           "label": "About Us",
           "href": "/about-us"
         },
-        {
-          "label": "Advisory Panel",
-          "href": "/advisory-panel"
-        },
+
         {
           "label": "Recognized Brands",
           "href": "/recognized-brands"
@@ -47,7 +43,7 @@
           "href": "/enter"
         },
         {
-          "label": "Nominate",
+          "label": "Nomination",
           "href": "/nominate"
         },
         {

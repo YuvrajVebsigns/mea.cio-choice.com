@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { ArrowUpLeft } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import useScrollAnimation from '../../../hooks/useScrollAnimation';
 import BlogCommentsPanel from '@/components/BlogCommentsPanel';
@@ -201,8 +201,19 @@ export default function BlogDetailsPage() {
 
   if (isLoading) {
     return (
-      <main className="blog-detail-page">
-        <p style={{ padding: '80px 20px', textAlign: 'center' }}>Loading blog...</p>
+      <main className="blog-detail-page relative z-0">
+        <div
+          className="flex items-center justify-center"
+          style={{
+            minHeight: '70vh',
+            paddingTop: '120px',
+          }}
+        >
+          <div
+            className="h-12 w-12 animate-spin rounded-full border-4 border-gray-200 border-t-[#8e0101]"
+            aria-label="Loading"
+          />
+        </div>
       </main>
     );
   }
@@ -221,7 +232,7 @@ export default function BlogDetailsPage() {
 
         <Link href="/blog" className="backbutton">
           <div className="backbutton-icon">
-            <ArrowUpLeft size={18} />
+            <ArrowUpRight size={18} />
           </div>
 
           <span>Back to Blog</span>
@@ -318,11 +329,10 @@ export default function BlogDetailsPage() {
               initialTransform="translateY(18px)"
             >
               <Link href="/blog" className="backbutton">
-                <div className="backbutton-icon">
-                  <ArrowUpLeft size={18} />
-                </div>
-
                 <span>Back to Blog</span>
+                <div className="backbutton-icon">
+                  <ArrowUpRight size={18} />
+                </div>
               </Link>
             </AnimatedBlock>
             <br />
@@ -340,11 +350,10 @@ export default function BlogDetailsPage() {
                   aria-haspopup="menu"
                   id="share-button"
                 >
-                  <div className="backbutton-icon">
-                    <ArrowUpLeft size={18} />
-                  </div>
-
                   <span>Share Blog</span>
+                  <div className="backbutton-icon">
+                    <ArrowUpRight size={18} />
+                  </div>
                 </button>
 
                 <br />

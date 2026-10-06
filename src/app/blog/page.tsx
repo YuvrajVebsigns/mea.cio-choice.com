@@ -688,7 +688,14 @@ export default function BlogPage() {
 
           <div className="blog-breadcrumb">
             <Link href="/" className="blog-breadcrumb-home">
-              🏦 Home
+              <Image
+                src="/assets/home/home.png" // Replace with your image path
+                alt="Home"
+                width={38}
+                height={48}
+                className="blog-home-icon"
+              />
+              <span>Home</span>
             </Link>
 
             <span>&gt;</span>
@@ -721,7 +728,11 @@ export default function BlogPage() {
           <br />
           <br />
 
-          {isLoading ? <p>Loading blogs...</p> : null}
+          {isLoading ? (
+            <div className="flex items-center justify-center py-8">
+              <div className="h-10 w-10 animate-spin rounded-full border-4 border-gray-200 border-t-[#8e0101]" />
+            </div>
+          ) : null}
 
           {!isLoading && error ? <p>{error}</p> : null}
 

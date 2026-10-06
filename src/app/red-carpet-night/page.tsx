@@ -7,8 +7,8 @@ export default function RedCarpetNight() {
         <Image
           src="/assets/images/MEA-redcarpet-night.jpeg"
           alt="MEA Red Carpet Night"
-          width={1100}
-          height={750}
+          width={600}
+          height={550}
           priority
           className="red-carpet-image"
         />

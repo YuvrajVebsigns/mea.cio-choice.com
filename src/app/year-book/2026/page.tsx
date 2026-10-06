@@ -359,10 +359,19 @@ export default function YearBook2026Page() {
         </div>
 
         {/* PAGE INDICATOR */}
+        {/* PAGE INDICATOR + DOWNLOAD */}
         <div className="year-book-controls" aria-label="Year book navigation">
           <p className="year-book-page-count" aria-live="polite">
             {pageLabel}
           </p>
+
+          <a
+            href="/assets/2026/Yearbook2026.pdf"
+            download="CIO-Choice-2026-Year-Book.pdf"
+            className="year-book-download"
+          >
+            Download PDF
+          </a>
         </div>
       </section>
     </main>

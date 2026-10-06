@@ -171,18 +171,7 @@ export default function Footer() {
                 </button>
               </form>
 
-              {message && (
-                <div
-                  className={`footer-message ${message.type}`}
-                  style={{
-                    marginTop: '8px',
-                    fontSize: '12px',
-                    color: message.type === 'success' ? '#10b981' : '#ef4444',
-                  }}
-                >
-                  {message.text}
-                </div>
-              )}
+              {message && <div className={`footer-message ${message.type}`}>{message.text}</div>}
 
               <div style={{ marginTop: '24px' }}>
                 <h4 className="footer-title">{data.office.title}</h4>

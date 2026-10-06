@@ -148,7 +148,11 @@ export default function AdvisoryPanelView({ year }: { year?: '2026' | '2027' }) 
 
       <section className="members-section">
         <div className="container">
-          {loading && <div className="text-center py-12">Loading {pageTitle}...</div>}
+          {loading && (
+            <div className="flex items-center justify-center py-16">
+              <div className="h-10 w-10 animate-spin rounded-full border-4 border-gray-200 border-t-[#8e0101]" />
+            </div>
+          )}
 
           {!loading && error && <div className="text-center py-12 text-red-500">{error}</div>}
 

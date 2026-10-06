@@ -123,6 +123,33 @@ export default function AboutUs() {
             </p>
           </div>
         </div>
+        <button
+          type="button"
+          className="back-btn1"
+          onClick={() => window.history.back()}
+          style={{
+            position: 'fixed',
+            left: '24px',
+            bottom: '24px',
+            zIndex: 99999,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '8px',
+            padding: '12px 22px',
+            border: 'none',
+            borderRadius: '50px',
+            background: '#8e0101',
+            color: '#ffffff',
+            fontSize: '15px',
+            fontWeight: 600,
+            lineHeight: 1,
+            cursor: 'pointer',
+            boxShadow: '0 6px 18px rgba(0, 0, 0, 0.15)',
+          }}
+        >
+          ← Back
+        </button>
       </section>
     </main>
   );
