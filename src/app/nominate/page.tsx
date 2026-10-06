@@ -668,7 +668,7 @@ export default function NominatePage() {
     return (
       <main className="nominate-page-container">
         <section className="nominate-success-section">
-          <h1>Thank you for your Nominations for CIO CHOICE 2027.</h1>
+          <h1>Thank you for your Nominations for CIO CHOICE MEA 2027.</h1>
 
           {/* <p>
             Thank you. Your nomination has been recorded. You will receive a confirmation email
