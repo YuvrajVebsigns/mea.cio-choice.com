@@ -135,8 +135,8 @@ export default function RegisterPage() {
     const trimmedPhone = phone.trim();
     if (!trimmedPhone) {
       nextErrors.phone = 'Phone number is required.';
-    } else if (!/^\d{10}$/.test(trimmedPhone)) {
-      nextErrors.phone = 'Phone number must be exactly 10 digits.';
+    } else if (!/^\d{8,12}$/.test(trimmedPhone)) {
+      nextErrors.phone = 'Phone number must be between 8 and 12 digits.';
     }
 
     if (!industry) {
@@ -290,11 +290,13 @@ export default function RegisterPage() {
                   value={phone}
                   disabled={loading}
                   inputMode="numeric"
-                  maxLength={10}
+                  maxLength={12}
+                  pattern="[0-9]{8,12}"
+                  title="Enter phone number between 8 and 12 digits"
                   onInput={(e) => {
                     e.currentTarget.value = e.currentTarget.value
                       .replace(/[^0-9]/g, '')
-                      .slice(0, 10);
+                      .slice(0, 12);
                   }}
                   onChange={(e) => {
                     setPhone(e.target.value);
@@ -362,7 +364,8 @@ export default function RegisterPage() {
                   !industry ||
                   !country ||
                   !getDialCodeFromCountry(country) ||
-                  phone.trim().length !== 10
+                  phone.trim().length < 8 ||
+                  phone.trim().length > 12
                 }
               >
                 {loading ? 'Submitting...' : 'SUBMIT'}

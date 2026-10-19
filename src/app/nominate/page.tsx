@@ -444,7 +444,7 @@ export default function NominatePage() {
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const phoneRegex = /^[0-9]{10}$/;
+    const phoneRegex = /^[0-9]{8,12}$/;
     const nameRegex = /^[A-Za-z\s]+$/;
 
     const nextErrors: FormErrors = {};
@@ -482,7 +482,7 @@ export default function NominatePage() {
     }
 
     if (submittedNominatorContact && !phoneRegex.test(submittedNominatorContact)) {
-      nextErrors.nominatorContact = 'Enter a valid 10-digit phone number.';
+      nextErrors.nominatorContact = 'Enter a valid phone number (8-12 digits).';
       hasErrors = true;
     }
 
@@ -551,7 +551,7 @@ export default function NominatePage() {
        * Mobile
        */
       if (c.mobile && !phoneRegex.test(c.mobile)) {
-        currentCioErrors.mobile = 'Enter a valid 10-digit mobile number.';
+        currentCioErrors.mobile = 'Enter a valid mobile number (8-12 digits).';
         hasErrors = true;
       }
 
@@ -961,7 +961,9 @@ export default function NominatePage() {
                           });
                         }
                       }}
-                      maxLength={10}
+                      maxLength={12}
+                      pattern="[0-9]{8,12}"
+                      title="Enter a valid phone number (8-12 digits)"
                       placeholder="9XXXXXXXX0"
                       className="nominate-input-field"
                     />
@@ -1164,7 +1166,9 @@ export default function NominatePage() {
                               onChange={(e) =>
                                 updateCio(idx, 'mobile', e.target.value.replace(/[^0-9]/g, ''))
                               }
-                              maxLength={10}
+                              maxLength={12}
+                              pattern="[0-9]{8,12}"
+                              title="Enter a valid mobile number (8-12 digits)"
                               placeholder="9XXXXXXXX0"
                               className="nominate-input-field"
                             />

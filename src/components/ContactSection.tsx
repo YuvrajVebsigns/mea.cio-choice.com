@@ -86,11 +86,11 @@
 
 //     /* Phone validation */
 
-//     if (!/^[0-9]{10}$/.test(trimmedPhone)) {
+//     if (!/^[0-9]{8,12}$/.test(trimmedPhone)) {
 //       setToast({
 //         type: 'error',
 //         title: 'Invalid Phone Number',
-//         message: 'Please enter a valid 10-digit phone number.',
+//         message: 'Please enter a valid phone number (8-12 digits).',
 //       });
 
 //       return;
@@ -280,9 +280,9 @@
 //                 required
 //                 autoComplete="tel"
 //                 inputMode="numeric"
-//                 maxLength={10}
-//                 pattern="[0-9]{10}"
-//                 title="Enter a valid 10-digit phone number"
+//                 maxLength={12}
+//                 pattern="[0-9]{8,12}"
+//                 title="Enter a valid phone number (8-12 digits)"
 //                 onChange={(event) => {
 //                   const value = event.target.value.replace(/[^0-9]/g, '');
 
@@ -739,6 +739,10 @@ export default function ContactSection() {
       setPopupMessage('Please enter your phone number.');
 
       return;
+    } else if (!/^[0-9]{8,12}$/.test(trimmedPhone)) {
+      setPopupMessage('Please enter a valid phone number (8-12 digits).');
+
+      return;
     }
 
     if (!trimmedService) {
@@ -960,12 +964,14 @@ export default function ContactSection() {
                 placeholder="Phone Number *"
                 value={phone}
                 required
-                maxLength={10}
-                pattern="[0-9]{10}"
-                title="Enter a valid 10-digit phone number"
+                maxLength={12}
+                pattern="[0-9]{8,12}"
+                title="Enter a valid phone number (8 to 12 digits)"
                 autoComplete="tel"
                 onInput={(event) => {
-                  event.currentTarget.value = event.currentTarget.value.replace(/[^0-9]/g, '');
+                  event.currentTarget.value = event.currentTarget.value
+                    .replace(/[^0-9]/g, '')
+                    .slice(0, 12);
                 }}
                 onChange={(event) => setPhone(event.target.value)}
               />

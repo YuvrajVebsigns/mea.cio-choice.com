@@ -62,8 +62,8 @@ export default function RegisterPage() {
 
     if (!trimmedPhone) {
       nextErrors.phone = 'Phone number is required.';
-    } else if (!/^\d{10}$/.test(trimmedPhone)) {
-      nextErrors.phone = 'Phone number must be exactly 10 digits.';
+    } else if (!/^\d{8,12}$/.test(trimmedPhone)) {
+      nextErrors.phone = 'Phone number must be between 8 and 12 digits.';
     }
 
     if (!organization.trim()) {
@@ -211,11 +211,11 @@ export default function RegisterPage() {
                 placeholder="9876543210"
                 value={phone}
                 inputMode="numeric"
-                maxLength={10}
-                pattern="[0-9]{10}"
-                title="Enter exactly 10 digit phone number"
+                maxLength={12}
+                pattern="[0-9]{8,12}"
+                title="Enter phone number between 8 and 12 digits"
                 onInput={(e) => {
-                  e.currentTarget.value = e.currentTarget.value.replace(/[^0-9]/g, '').slice(0, 10);
+                  e.currentTarget.value = e.currentTarget.value.replace(/[^0-9]/g, '').slice(0, 12);
                 }}
                 onChange={(e) => {
                   setPhone(e.target.value);
@@ -298,7 +298,8 @@ export default function RegisterPage() {
                   !email ||
                   !country ||
                   !getDialCodeFromCountry(country) ||
-                  phone.length !== 10 ||
+                  phone.length < 8 ||
+                  phone.length > 12 ||
                   !organization.trim() ||
                   !selectedEvent
                 }
