@@ -134,7 +134,9 @@ export default function EnterPage() {
               <li>Entry – US$ 1,000 + Local Taxes for Yr. 2027</li>
 
               <li>
-                If Recognised – CIO CHOICE of the Year – US$ 10,000 + Local Taxes for Yr. 2027
+                {/* If Recognised – CIO CHOICE of the Year – US$ 10,000 + Local Taxes for Yr. 2027
+                (License Fees) */}
+                If Recognised – CIO CHOICE of the Year – US$ 6,900 + Local Taxes for Yr. 2027
                 (License Fees)
               </li>
             </ul>
