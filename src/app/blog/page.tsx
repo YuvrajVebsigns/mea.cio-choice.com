@@ -537,9 +537,9 @@ function AnimatedBlogCard({ blog, index, variant = 'animate-fade-in' }: Animated
       </div>
 
       <div className="blogpage-content">
-        <div className="blogpage-meta">
+        {/* <div className="blogpage-meta">
           <span className="blogpage-category">{getBlogCategory(blog)}</span>
-        </div>
+        </div> */}
 
         <h4 className="blogpage-heading blogpage-heading-fixed">{blog.title}</h4>
 
@@ -557,8 +557,13 @@ function AnimatedBlogCard({ blog, index, variant = 'animate-fade-in' }: Animated
               className={`blogpage-engagement-item ${liked ? 'liked' : ''}`}
               aria-label={`${localLikes} likes`}
               onClick={handleLikeClick}
+              style={{ color: liked ? 'red' : 'inherit' }}
             >
-              <Heart size={14} fill={liked ? 'currentColor' : 'none'} />
+              <Heart
+                size={14}
+                fill={liked ? 'currentColor' : 'none'}
+                style={{ color: liked ? 'red' : 'inherit' }}
+              />
               <span>{localLikes}</span>
             </button>
 

@@ -50,7 +50,7 @@ const industries = [
 ];
 
 export default function RegisterPage() {
-  const [reportId, setReportId] = useState('6aaed8a77feb42b50fb395dc');
+  const [reportId, setReportId] = useState('6adf74879132c6df63519858');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [companyName, setCompanyName] = useState('');
@@ -65,7 +65,7 @@ export default function RegisterPage() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
 
-    setReportId(params.get('reportId') || '6aaed8a77feb42b50fb395dc');
+    setReportId(params.get('reportId') || '6adf74879132c6df63519858');
     setFirstName(params.get('firstName') || '');
     setLastName(params.get('lastName') || '');
     setEmail(params.get('email') || '');
