@@ -366,7 +366,7 @@ export default function YearBook2026Page() {
           </p>
 
           <a
-            href="/assets/2026/Yearbook2026.pdf"
+            href="/assets/2026/cio-choice-pages-jpg/CIO_Choice_MEA_2026_Yearbook.pdf"
             download="CIO-Choice-2026-Year-Book.pdf"
             className="year-book-download"
           >
