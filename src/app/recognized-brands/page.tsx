@@ -9,7 +9,7 @@ interface Brand {
   name: string;
   category: string;
   logo: string;
-  [key: string]: unknown;
+  link: string;
 }
 
 interface Testimonial {
@@ -17,7 +17,7 @@ interface Testimonial {
   author?: string;
   name?: string;
   quote?: string;
-  category?: string;
+  role?: string;
   avatar?: string;
   logo?: string;
 }
@@ -36,6 +36,19 @@ function getInitials(name: string): string {
     .map((word) => word.charAt(0).toUpperCase())
     .join('')
     .substring(0, 2);
+}
+
+function getExternalLink(value?: string): string {
+  if (!value) {
+    return '';
+  }
+
+  try {
+    const url = new URL(value);
+    return url.protocol === 'http:' || url.protocol === 'https:' ? url.href : '';
+  } catch {
+    return '';
+  }
 }
 
 function BrandLogo({ name, logo }: { name: string; logo: string }) {
@@ -100,8 +113,9 @@ function extractBrandsFromPage(page: WebsitePage | null): Brand[] {
     .map((brand, index) => ({
       id: brand.id ?? `brand-${index}`,
       name: brand.author ?? brand.name ?? '',
-      category: brand.quote ?? brand.category ?? '',
+      category: brand.role ?? '',
       logo: brand.avatar ?? brand.logo ?? '',
+      link: getExternalLink(brand.quote),
     }));
 }
 
@@ -173,10 +187,35 @@ export default function RecognizedBrands() {
                   <h3>{brand.name}</h3>
                   <BrandLogo name={brand.name} logo={brand.logo} />
                   <div className="category">
-                    <small>Category</small>
+                    {/* <small>Category</small> */}
 
                     <p>{brand.category}</p>
                   </div>
+                  {brand.link && (
+                    <a
+                      href={brand.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="brand-view-link"
+                      aria-label={`View ${brand.name} website`}
+                    >
+                      <span>Visit Website</span>
+                      <svg
+                        aria-hidden="true"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        className="brand-view-icon"
+                      >
+                        <path
+                          d="M5 15 15 5M6 5h9v9"
+                          stroke="currentColor"
+                          strokeWidth="1.8"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </a>
+                  )}
                 </div>
               ))}
             </div>

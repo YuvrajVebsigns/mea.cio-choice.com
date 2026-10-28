@@ -223,14 +223,14 @@ export default function Navbar() {
 
             <div className="mega-panel">
               <ul>
-                <li>
+                {/* <li>
                   <Link href="/advisory-panel/2027" className="mega-item" onClick={closeMobileMenu}>
                     Advisory 2027
                   </Link>
-                </li>
+                </li> */}
                 <li>
-                  <Link href="/advisory-panel/2026" className="mega-item" onClick={closeMobileMenu}>
-                    Advisory 2026
+                  <Link href="/advisory-panel/2027" className="mega-item" onClick={closeMobileMenu}>
+                    Advisory 2027
                   </Link>
                 </li>
               </ul>
