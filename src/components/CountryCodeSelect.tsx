@@ -9,6 +9,7 @@ type CountryCodeSelectProps = {
   onChange: (country: Country | undefined) => void;
   disabled?: boolean;
   id?: string;
+  countryNameOverrides?: Partial<Record<Country, string>>;
 };
 
 export function getDialCodeFromCountry(country: Country | undefined): string {
@@ -25,19 +26,23 @@ export default function CountryCodeSelect({
   onChange,
   disabled,
   id,
+  countryNameOverrides,
 }: CountryCodeSelectProps) {
   const options = useMemo(
     () =>
-      getCountries().map((country: Country) => {
-        const dialCode = getDialCodeFromCountry(country);
-        const label = (en as Record<string, string>)[country] ?? country;
-        return {
-          country,
-          dialCode,
-          label: `${label} (${dialCode})`,
-        };
-      }),
-    [],
+      getCountries()
+        .map((country: Country) => {
+          const dialCode = getDialCodeFromCountry(country);
+          const label =
+            countryNameOverrides?.[country] ?? (en as Record<string, string>)[country] ?? country;
+          return {
+            country,
+            dialCode,
+            label,
+          };
+        })
+        .sort((a, b) => a.label.localeCompare(b.label, 'en', { sensitivity: 'base' })),
+    [countryNameOverrides],
   );
 
   return (
@@ -54,11 +59,13 @@ export default function CountryCodeSelect({
       <option value="" disabled>
         Select country code
       </option>
-      {options.map(({ country, label }: { country: Country; label: string }) => (
-        <option key={country} value={country}>
-          {label}
-        </option>
-      ))}
+      {options.map(
+        ({ country, dialCode, label }: { country: Country; dialCode: string; label: string }) => (
+          <option key={country} value={country}>
+            {label} ({dialCode})
+          </option>
+        ),
+      )}
     </select>
   );
 }

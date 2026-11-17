@@ -45,7 +45,7 @@ interface FooterData {
     title: string;
     placeholder: string;
   };
-  office: {
+  office?: {
     title: string;
     addressLines: string[];
   };
@@ -173,18 +173,20 @@ export default function Footer() {
 
               {message && <div className={`footer-message ${message.type}`}>{message.text}</div>}
 
-              <div style={{ marginTop: '24px' }}>
-                <h4 className="footer-title">{data.office.title}</h4>
+              {data.office && (
+                <div style={{ marginTop: '24px' }}>
+                  <h4 className="footer-title">{data.office.title}</h4>
 
-                <p className="footer-description">
-                  {data.office.addressLines.map((line, index) => (
-                    <span key={index}>
-                      {line}
-                      {index < data.office.addressLines.length - 1 && <br />}
-                    </span>
-                  ))}
-                </p>
-              </div>
+                  <p className="footer-description">
+                    {data.office.addressLines.map((line, index, addressLines) => (
+                      <span key={index}>
+                        {line}
+                        {index < addressLines.length - 1 && <br />}
+                      </span>
+                    ))}
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         </div>

@@ -21,6 +21,8 @@ import { API_ENDPOINTS } from '@/constants/api';
 
 import type { WebsiteNominationCategory } from '@/types/nominations.types';
 
+const NOMINATION_COUNTRY_NAME_OVERRIDES: Partial<Record<Country, string>> = { AE: 'UAE' };
+
 type CIOEntry = {
   categoryId: string;
   subcategoryId: string;
@@ -83,7 +85,7 @@ export default function NominatePage() {
   const [nominatorCompany, setNominatorCompany] = useState('');
   const [nominatorCity, setNominatorCity] = useState('');
   const [nominatorContact, setNominatorContact] = useState('');
-  const [nominatorCountry, setNominatorCountry] = useState<Country>('IN');
+  const [nominatorCountry, setNominatorCountry] = useState<Country>('AE');
   const [nominatorEmail, setNominatorEmail] = useState('');
 
   const [cios, setCios] = useState<CIOEntry[]>([
@@ -94,7 +96,7 @@ export default function NominatePage() {
       company: '',
       email: '',
       mobile: '',
-      country: 'IN',
+      country: 'AE',
     },
   ]);
 
@@ -354,7 +356,7 @@ export default function NominatePage() {
           company: '',
           email: '',
           mobile: '',
-          country: 'IN',
+          country: 'AE',
         },
       ];
     });
@@ -904,7 +906,7 @@ export default function NominatePage() {
                           });
                         }
                       }}
-                      placeholder="eg. Mumbai"
+                      placeholder="eg. Dubai"
                       className="nominate-input-field"
                     />
                     {errors.nominatorCity && (
@@ -941,7 +943,8 @@ export default function NominatePage() {
                     <CountryCodeSelect
                       id="nominator-country-code"
                       value={nominatorCountry}
-                      onChange={(country) => setNominatorCountry(country ?? 'IN')}
+                      countryNameOverrides={NOMINATION_COUNTRY_NAME_OVERRIDES}
+                      onChange={(country) => setNominatorCountry(country ?? 'AE')}
                     />
                   </label>
 
@@ -1149,7 +1152,8 @@ export default function NominatePage() {
                             Country Code
                             <CountryCodeSelect
                               value={c.country}
-                              onChange={(country) => updateCio(idx, 'country', country ?? 'IN')}
+                              countryNameOverrides={NOMINATION_COUNTRY_NAME_OVERRIDES}
+                              onChange={(country) => updateCio(idx, 'country', country ?? 'AE')}
                             />
                             {errors.cios?.[idx]?.countryCode && (
                               <div className="registration-error">

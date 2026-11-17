@@ -57,22 +57,7 @@
     "title": "Subscribe",
     "placeholder": "Enter your email"
   },
-  "office": {
-    "title": "Our Office",
-    "addressLines": [
-      "Units Nos. 3037 – A1 Wing, 3rd Floor,",
-      "Oberoi Garden Estate,",
-      "Near Chandivali Studio,",
-      "Andheri (East),",
-      "Mumbai – 400072, INDIA"
-    ]
-  },
   "contacts": [
-    {
-      "type": "phone",
-      "label": "+971 56 113 6505",
-      "href": "tel:+971561136505"
-    },
     {
       "type": "email",
       "label": "contact@cxo-capital.com",
